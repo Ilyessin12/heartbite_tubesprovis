@@ -1,0 +1,150 @@
+import 'package:flutter/material.dart';
+import '../models/recipe.dart';
+import '../models/direction.dart';
+import '../widgets/recipe_header.dart';
+import '../widgets/direction_item.dart';
+import '../utils/constants.dart';
+
+class DirectionsScreen extends StatefulWidget {
+  final Recipe recipe;
+  
+  const DirectionsScreen({
+    Key? key,
+    required this.recipe,
+  }) : super(key: key);
+
+  @override
+  State<DirectionsScreen> createState() => _DirectionsScreenState();
+}
+
+class _DirectionsScreenState extends State<DirectionsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Back button
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Content
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RecipeHeader(
+                    recipe: widget.recipe,
+                    showAuthor: false,
+                  ),
+                  const SizedBox(height: 24),
+                  
+                  // Directions section header
+                  const Text(
+                    "Directions",
+                    style: AppTextStyles.subheading,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    "Follow these steps to cook this recipes",
+                    style: AppTextStyles.caption,
+                  ),
+                ],
+              ),
+            ),
+            
+            // Directions list
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                itemCount: widget.recipe.directions.length,
+                itemBuilder: (context, index) {
+                  final direction = widget.recipe.directions[index];
+                  return DirectionItem(
+                    direction: direction,
+                    showCheckbox: true,
+                    onChecked: (checked) {
+                      setState(() {
+                        direction.isCompleted = checked;
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+            
+            // Finish button
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Show completion dialog or navigate back to recipe detail
+                    _showCompletionDialog(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Finish"),
+                      SizedBox(width: 8),
+                      Icon(Icons.check, size: 16),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  void _showCompletionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Congratulations!"),
+        content: const Text("You've successfully completed this recipe. Would you like to share your experience?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              Navigator.popUntil(context, (route) => route.isFirst); // Go back to first screen
+            },
+            child: const Text("Maybe Later"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              Navigator.popUntil(context, (route) => route.isFirst); // Go back to first screen
+              // Show share options or comment section
+            },
+            child: const Text("Share"),
+          ),
+        ],
+      ),
+    );
+  }
+}
