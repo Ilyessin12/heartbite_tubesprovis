@@ -6,9 +6,9 @@ class DiscussionScreen extends StatefulWidget {
   final List<Comment> comments;
   
   const DiscussionScreen({
-    Key? key,
+    super.key,
     required this.comments,
-  }) : super(key: key);
+  });
 
   @override
   State<DiscussionScreen> createState() => _DiscussionScreenState();

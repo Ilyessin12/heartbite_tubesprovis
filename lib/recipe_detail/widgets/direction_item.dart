@@ -8,11 +8,11 @@ class DirectionItem extends StatelessWidget {
   final bool showCheckbox;
   
   const DirectionItem({
-    Key? key,
+    super.key,
     required this.direction,
     this.onChecked,
     this.showCheckbox = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

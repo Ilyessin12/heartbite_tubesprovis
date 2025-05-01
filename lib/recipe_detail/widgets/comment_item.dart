@@ -8,11 +8,11 @@ class CommentItem extends StatefulWidget {
   final VoidCallback onReply;
   
   const CommentItem({
-    Key? key,
+    super.key,
     required this.comment,
     this.onLike,
     required this.onReply,
-  }) : super(key: key);
+  });
 
   @override
   State<CommentItem> createState() => _CommentItemState();

@@ -8,11 +8,11 @@ class CookbookItem extends StatelessWidget {
   final VoidCallback onTap;
   
   const CookbookItem({
-    Key? key,
+    super.key,
     required this.cookbook,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

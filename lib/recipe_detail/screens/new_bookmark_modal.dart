@@ -5,9 +5,9 @@ class NewBookmarkModal extends StatefulWidget {
   final Function(String) onSave;
   
   const NewBookmarkModal({
-    Key? key,
+    super.key,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   State<NewBookmarkModal> createState() => _NewBookmarkModalState();

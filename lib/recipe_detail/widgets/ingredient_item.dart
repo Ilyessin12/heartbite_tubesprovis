@@ -8,11 +8,11 @@ class IngredientItem extends StatelessWidget {
   final bool showCheckbox;
   
   const IngredientItem({
-    Key? key,
+    super.key,
     required this.ingredient,
     this.onChecked,
     this.showCheckbox = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

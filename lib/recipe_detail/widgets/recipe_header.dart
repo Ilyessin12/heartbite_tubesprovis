@@ -8,11 +8,11 @@ class RecipeHeader extends StatelessWidget {
   final bool showOverlayInfo;
   
   const RecipeHeader({
-    Key? key,
+    super.key,
     required this.recipe,
     this.showAuthor = true,
     this.showOverlayInfo = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

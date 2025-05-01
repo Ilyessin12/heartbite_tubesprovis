@@ -7,12 +7,12 @@ class GalleryGrid extends StatelessWidget {
   final bool showAll;
   
   const GalleryGrid({
-    Key? key,
+    super.key,
     required this.images,
     required this.onImageTap,
     this.crossAxisCount = 3,
     this.showAll = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
