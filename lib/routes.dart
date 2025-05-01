@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+//Detail resep import
+import 'recipe_detail/screens/recipe_detail_screen.dart';
+import 'recipe_detail/recipe_detail.dart'; // Import the file with getSampleRecipe
+import 'recipe_detail/models/recipe.dart'; // Import the Recipe model
+
 // Define placeholder pages for now
 class PlaceholderPage extends StatelessWidget {
   final String title;
@@ -22,10 +27,11 @@ class AppRoutes {
   static const String bookmark = '/bookmark';
   static const String homepage = '/homepage';
   static const String accountSetup = '/account-setup';
-  // Sidebar itself might not be a route, but its items are
+  // Sidebar starts
   static const String profile = '/profile';
   static const String appSettings = '/settings';
   static const String about = '/about';
+  // Sidebar ends
   static const String welcome = '/welcome';
   static const String tambahResep = '/tambah-resep';
   static const String notifikasi = '/notifikasi';
@@ -45,8 +51,13 @@ class AppRoutes {
          pageTitle = 'Login';
          break;
        case detailResep:
-         pageTitle = 'Detail Resep';
-         break;
+        // Get the sample recipe data
+        final Recipe sampleRecipe = getSampleRecipe();
+        // Return the MaterialPageRoute for RecipeDetailScreen
+        return MaterialPageRoute(
+          builder: (context) => RecipeDetailScreen(recipe: sampleRecipe),
+          settings: settings,
+        );
        case bookmark:
          pageTitle = 'Bookmark';
          break;
