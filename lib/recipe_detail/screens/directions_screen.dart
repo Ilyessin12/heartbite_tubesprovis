@@ -9,9 +9,9 @@ class DirectionsScreen extends StatefulWidget {
   final Recipe recipe;
   
   const DirectionsScreen({
-    super.key,
+    Key? key,
     required this.recipe,
-  });
+  }) : super(key: key);
 
   @override
   State<DirectionsScreen> createState() => _DirectionsScreenState();
@@ -21,6 +21,7 @@ class _DirectionsScreenState extends State<DirectionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -62,12 +63,12 @@ class _DirectionsScreenState extends State<DirectionsScreen> {
                   
                   // Directions section header
                   const Text(
-                    "Directions",
+                    "Langkah-langkah",
                     style: AppTextStyles.subheading,
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    "Follow these steps to cook this recipes",
+                    "Ikuti langkah-langkah ini untuk memasak resep ini",
                     style: AppTextStyles.caption,
                   ),
                 ],
@@ -104,12 +105,25 @@ class _DirectionsScreenState extends State<DirectionsScreen> {
                     // Show completion dialog or navigate back to recipe detail
                     _showCompletionDialog(context);
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Text("Finish"),
+                      Text(
+                        "Selesai",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(width: 8),
-                      Icon(Icons.check, size: 16),
+                      Icon(Icons.check, size: 16, color: Colors.white),
                     ],
                   ),
                 ),
@@ -125,15 +139,15 @@ class _DirectionsScreenState extends State<DirectionsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Congratulations!"),
-        content: const Text("You've successfully completed this recipe. Would you like to share your experience?"),
+        title: const Text("Selamat!"),
+        content: const Text("Anda telah berhasil menyelesaikan resep ini. Apakah Anda ingin berbagi pengalaman Anda?"),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context); // Close dialog
               Navigator.popUntil(context, (route) => route.isFirst); // Go back to first screen
             },
-            child: const Text("Maybe Later"),
+            child: const Text("Nanti Saja"),
           ),
           ElevatedButton(
             onPressed: () {
@@ -141,7 +155,7 @@ class _DirectionsScreenState extends State<DirectionsScreen> {
               Navigator.popUntil(context, (route) => route.isFirst); // Go back to first screen
               // Show share options or comment section
             },
-            child: const Text("Share"),
+            child: const Text("Bagikan"),
           ),
         ],
       ),

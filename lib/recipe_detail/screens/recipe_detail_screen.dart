@@ -18,9 +18,9 @@ class RecipeDetailScreen extends StatefulWidget {
   final Recipe recipe;
   
   const RecipeDetailScreen({
-    super.key,
+    Key? key,
     required this.recipe,
-  });
+  }) : super(key: key);
 
   @override
   State<RecipeDetailScreen> createState() => _RecipeDetailScreenState();
@@ -29,6 +29,31 @@ class RecipeDetailScreen extends StatefulWidget {
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   bool isFavorite = false;
   bool isBookmarked = false;
+  final TextEditingController _commentController = TextEditingController();
+  late List<Comment> _comments;
+  
+  @override
+  void initState() {
+    super.initState();
+    // Create a deep copy of the comments to avoid modifying the original list
+    _comments = widget.recipe.comments.map((comment) => comment.copyWith()).toList();
+  }
+  
+  void _addComment(String text) {
+    if (text.trim().isEmpty) return;
+    
+    setState(() {
+      // Add new comment at the beginning of the list with 0 likes
+      _comments.insert(0, Comment.create(text: text));
+    });
+    _commentController.clear();
+  }
+  
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -83,7 +108,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         const SizedBox(width: 8),
                         GestureDetector(
                           onTap: () {
-                            _showBookmarkModal(context);
+                            if (isBookmarked) {
+                              // If already bookmarked, remove bookmark
+                              setState(() {
+                                isBookmarked = false;
+                              });
+                            } else {
+                              // If not bookmarked, show modal
+                              _showBookmarkModal(context);
+                            }
                           },
                           child: Container(
                             width: 40,
@@ -121,16 +154,16 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _buildStatItem(Icons.local_fire_department, "${widget.recipe.calories}", "Calories"),
+                          _buildStatItem(Icons.local_fire_department, "${widget.recipe.calories}", "Kalori"),
                           _buildStatItem(Icons.people_outline, widget.recipe.portions, "Porsi"),
-                          _buildStatItem(Icons.timer, "${widget.recipe.cookingMinutes}", "Mins"),
+                          _buildStatItem(Icons.timer, "${widget.recipe.cookingMinutes}", "Menit"),
                         ],
                       ),
                     ),
                     const SizedBox(height: 24),
                     
                     // Ingredients section
-                    _buildSectionHeader("Ingredients", "${widget.recipe.ingredients.length} items"),
+                    _buildSectionHeader("Bahan-bahan", "${widget.recipe.ingredients.length} item"),
                     const SizedBox(height: 12),
                     ...widget.recipe.ingredients.map((ingredient) => 
                       IngredientItem(
@@ -141,7 +174,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     const SizedBox(height: 16),
                     
                     // Directions section
-                    _buildSectionHeader("Directions", null),
+                    _buildSectionHeader("Langkah-langkah", null),
                     const SizedBox(height: 12),
                     ...widget.recipe.directions.map((direction) => 
                       DirectionItem(
@@ -174,7 +207,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             Text(
-                              "Start Cooking",
+                              "Mulai Memasak",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -193,7 +226,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Gallery",
+                          "Galeri",
                           style: AppTextStyles.subheading,
                         ),
                         TextButton(
@@ -205,7 +238,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                               ),
                             );
                           },
-                          child: const Text("view all"),
+                          child: const Text("lihat semua"),
                         ),
                       ],
                     ),
@@ -232,7 +265,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Discussion",
+                          "Diskusi",
                           style: AppTextStyles.subheading,
                         ),
                         TextButton(
@@ -240,26 +273,34 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DiscussionScreen(comments: widget.recipe.comments),
+                                builder: (context) => DiscussionScreen(
+                                  comments: _comments,
+                                  onCommentsUpdated: (updatedComments) {
+                                    // Update comments when returning from discussion screen
+                                    setState(() {
+                                      _comments = updatedComments;
+                                    });
+                                  },
+                                ),
                               ),
                             );
                           },
-                          child: const Text("view all"),
+                          child: const Text("lihat semua"),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    ...widget.recipe.comments.take(3).map((comment) => 
+                    ..._comments.take(3).map((comment) => 
                       CommentItem(
                         comment: comment,
                         onLike: (liked) {
-                          // Handle like
                           setState(() {
-                            comment.isLiked = liked;
-                            if (liked) {
-                              comment.likeCount += 1;
-                            } else {
-                              comment.likeCount -= 1;
+                            final index = _comments.indexOf(comment);
+                            if (index != -1) {
+                              _comments[index] = comment.copyWith(
+                                isLiked: liked,
+                                likeCount: liked ? comment.likeCount + 1 : comment.likeCount - 1,
+                              );
                             }
                           });
                         },
@@ -279,23 +320,32 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       ),
                       child: Row(
                         children: [
-                          const Expanded(
-                            child: Text(
-                              "Discuss here",
-                              style: TextStyle(color: Colors.grey),
+                          Expanded(
+                            child: TextField(
+                              controller: _commentController,
+                              decoration: const InputDecoration(
+                                hintText: "Diskusi di sini",
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: Colors.grey),
+                              ),
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: const Icon(
-                              Icons.send,
-                              color: AppColors.primary,
-                              size: 16,
+                          GestureDetector(
+                            onTap: () {
+                              _addComment(_commentController.text);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                Icons.send,
+                                color: AppColors.primary,
+                                size: 16,
+                              ),
                             ),
                           ),
                         ],

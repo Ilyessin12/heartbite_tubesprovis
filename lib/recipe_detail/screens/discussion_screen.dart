@@ -4,11 +4,13 @@ import '../utils/constants.dart';
 
 class DiscussionScreen extends StatefulWidget {
   final List<Comment> comments;
+  final Function(List<Comment>)? onCommentsUpdated;
   
   const DiscussionScreen({
-    super.key,
+    Key? key,
     required this.comments,
-  });
+    this.onCommentsUpdated,
+  }) : super(key: key);
 
   @override
   State<DiscussionScreen> createState() => _DiscussionScreenState();
@@ -16,9 +18,31 @@ class DiscussionScreen extends StatefulWidget {
 
 class _DiscussionScreenState extends State<DiscussionScreen> {
   final TextEditingController _commentController = TextEditingController();
+  late List<Comment> _comments;
+  
+  @override
+  void initState() {
+    super.initState();
+    // Use the same comment list reference
+    _comments = widget.comments;
+  }
+  
+  void _addComment(String text) {
+    if (text.trim().isEmpty) return;
+    
+    setState(() {
+      // Add new comment at the beginning of the list with 0 likes
+      _comments.insert(0, Comment.create(text: text));
+    });
+    _commentController.clear();
+  }
   
   @override
   void dispose() {
+    // Notify parent about updated comments when leaving the screen
+    if (widget.onCommentsUpdated != null) {
+      widget.onCommentsUpdated!(_comments);
+    }
     _commentController.dispose();
     super.dispose();
   }
@@ -36,7 +60,13 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      // Notify parent about updated comments before popping
+                      if (widget.onCommentsUpdated != null) {
+                        widget.onCommentsUpdated!(_comments);
+                      }
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       width: 40,
                       height: 40,
@@ -52,7 +82,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                   ),
                   const SizedBox(width: 16),
                   const Text(
-                    "Discussion",
+                    "Diskusi",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -66,9 +96,9 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: widget.comments.length,
+                itemCount: _comments.length,
                 itemBuilder: (context, index) {
-                  final comment = widget.comments[index];
+                  final comment = _comments[index];
                   return _buildCommentItem(comment);
                 },
               ),
@@ -89,23 +119,28 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                       child: TextField(
                         controller: _commentController,
                         decoration: const InputDecoration(
-                          hintText: "Discuss here",
+                          hintText: "Diskusi di sini",
                           border: InputBorder.none,
                           hintStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Icon(
-                        Icons.send,
-                        color: AppColors.primary,
-                        size: 16,
+                    GestureDetector(
+                      onTap: () {
+                        _addComment(_commentController.text);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Icon(
+                          Icons.send,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -151,11 +186,12 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          comment.isLiked = !comment.isLiked;
-                          if (comment.isLiked) {
-                            comment.likeCount += 1;
-                          } else {
-                            comment.likeCount -= 1;
+                          final index = _comments.indexOf(comment);
+                          if (index != -1) {
+                            _comments[index] = comment.copyWith(
+                              isLiked: !comment.isLiked,
+                              likeCount: comment.isLiked ? comment.likeCount - 1 : comment.likeCount + 1,
+                            );
                           }
                         });
                       },
@@ -188,7 +224,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            "Reply",
+                            "Balas",
                             style: AppTextStyles.caption,
                           ),
                         ],

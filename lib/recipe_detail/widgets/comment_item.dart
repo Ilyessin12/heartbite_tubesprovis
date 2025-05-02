@@ -105,7 +105,7 @@ class _CommentItemState extends State<CommentItem> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            "Reply",
+                            "Balas",
                             style: AppTextStyles.caption,
                           ),
                         ],

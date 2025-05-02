@@ -6,10 +6,10 @@ class GalleryScreen extends StatefulWidget {
   final int initialIndex;
   
   const GalleryScreen({
-    super.key,
+    Key? key,
     required this.images,
     this.initialIndex = 0,
-  });
+  }) : super(key: key);
 
   @override
   State<GalleryScreen> createState() => _GalleryScreenState();
@@ -84,7 +84,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       ),
                     ),
                     Text(
-                      "Gallery",
+                      "Galeri",
                       style: AppTextStyles.heading.copyWith(color: Colors.white),
                     ),
                     const SizedBox(width: 40), // For balance

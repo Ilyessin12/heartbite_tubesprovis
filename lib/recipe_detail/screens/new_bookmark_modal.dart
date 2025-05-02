@@ -5,9 +5,9 @@ class NewBookmarkModal extends StatefulWidget {
   final Function(String) onSave;
   
   const NewBookmarkModal({
-    super.key,
+    Key? key,
     required this.onSave,
-  });
+  }) : super(key: key);
 
   @override
   State<NewBookmarkModal> createState() => _NewBookmarkModalState();
@@ -35,8 +35,13 @@ class _NewBookmarkModalState extends State<NewBookmarkModal> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Create new cookbook",
+            "Buat Buku Resep Baru",
             style: AppTextStyles.heading,
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            "buat buku resep baru untuk menyimpan resep Anda",
+            style: AppTextStyles.caption,
           ),
           const SizedBox(height: 16),
           
@@ -44,14 +49,14 @@ class _NewBookmarkModalState extends State<NewBookmarkModal> {
           TextField(
             controller: _nameController,
             decoration: InputDecoration(
-              hintText: "Title",
+              hintText: "Nama Buku Resep",
               filled: true,
               fillColor: AppColors.cardBackground,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             ),
           ),
           const SizedBox(height: 16),
@@ -59,34 +64,23 @@ class _NewBookmarkModalState extends State<NewBookmarkModal> {
           // Action buttons
           Row(
             children: [
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.grey,
-                  ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Batal"),
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: SizedBox(
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_nameController.text.isNotEmpty) {
-                        widget.onSave(_nameController.text);
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text("Save"),
-                  ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    final name = _nameController.text.trim();
+                    if (name.isNotEmpty) {
+                      widget.onSave(name);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text("Buat"),
                 ),
               ),
             ],

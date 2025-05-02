@@ -8,9 +8,9 @@ class BookmarkModal extends StatefulWidget {
   final Function(String) onSave;
   
   const BookmarkModal({
-    super.key,
+    Key? key,
     required this.onSave,
-  });
+  }) : super(key: key);
 
   @override
   State<BookmarkModal> createState() => _BookmarkModalState();
@@ -23,13 +23,13 @@ class _BookmarkModalState extends State<BookmarkModal> {
   final List<Cookbook> cookbooks = [
     Cookbook(
       id: '1',
-      name: 'Delicious Cake',
+      name: 'Kue Lezat',
       imageUrl: 'assets/images/cookbooks/cake.jpg',
       recipeCount: 23,
     ),
     Cookbook(
       id: '2',
-      name: 'Chicken Spirit',
+      name: 'Masakan Ayam',
       imageUrl: 'assets/images/cookbooks/chicken.jpg',
       recipeCount: 12,
     ),
@@ -48,12 +48,12 @@ class _BookmarkModalState extends State<BookmarkModal> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Add to Cookbook",
+            "Tambahkan ke Buku Resep",
             style: AppTextStyles.heading,
           ),
           const SizedBox(height: 8),
           const Text(
-            "add this recipe to your cookbook",
+            "tambahkan resep ini ke buku resep Anda",
             style: AppTextStyles.caption,
           ),
           const SizedBox(height: 16),
@@ -129,7 +129,7 @@ class _BookmarkModalState extends State<BookmarkModal> {
                     onPressed: selectedCookbookId != null
                         ? () => widget.onSave(selectedCookbookId!)
                         : null,
-                    child: const Text("Save"),
+                    child: const Text("Simpan"),
                   ),
                 ),
               ),
