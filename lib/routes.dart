@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 
-//Detail resep import
+// === Detail Resep dan Model ===
 import 'recipe_detail/screens/recipe_detail_screen.dart';
-import 'recipe_detail/recipe_detail.dart'; // Import the file with getSampleRecipe
-import 'recipe_detail/models/recipe.dart'; // Import the Recipe model
+import 'recipe_detail/recipe_detail.dart';
+import 'recipe_detail/models/recipe.dart';
 
-// Define placeholder pages for now
+// === Halaman Tim (Default) ===
+// (Halaman lainnya tetap gunakan Placeholder)
+
+// === Halaman Milikmu ===
+import 'recipe_detail/screens/heartbite_screen.dart';
+import 'recipe_detail/screens/profile_screen.dart';
+import 'recipe_detail/screens/following_screen.dart';
+import 'recipe_detail/screens/followers_screen.dart';
+import 'recipe_detail/screens/settings_screen.dart';
+import 'recipe_detail/screens/country_screen.dart';
+import 'recipe_detail/screens/notification_preferences_screen.dart';
+import 'recipe_detail/screens/about_screen.dart';
+import 'recipe_detail/screens/edit_profile_screen.dart';
+
+
+// === Placeholder Sementara ===
 class PlaceholderPage extends StatelessWidget {
   final String title;
   const PlaceholderPage({super.key, required this.title});
@@ -19,79 +34,109 @@ class PlaceholderPage extends StatelessWidget {
   }
 }
 
-
-// Route names
+// === AppRoutes ===
 class AppRoutes {
   static const String login = '/login';
   static const String detailResep = '/detail-resep';
   static const String bookmark = '/bookmark';
   static const String homepage = '/homepage';
   static const String accountSetup = '/account-setup';
-  // Sidebar starts
   static const String profile = '/profile';
   static const String appSettings = '/settings';
   static const String about = '/about';
-  // Sidebar ends
   static const String welcome = '/welcome';
   static const String tambahResep = '/tambah-resep';
   static const String notifikasi = '/notifikasi';
 
+  // Tambahan routes milikmu:
+  static const String heartbite = '/heartbite';
+  static const String following = '/following';
+  static const String followers = '/followers';
+  static const String settingsCountry = '/settings/country';
+  static const String settingsNotif = '/settings/notifications';
+  static const String editProfile = '/edit-profile';
 
-
-  // Function to generate routes (can be expanded later)
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // In the future, you can use a switch statement based on settings.name
-    // to return MaterialPageRoute for each actual page.
-    // For now, all routes lead to a placeholder page.
-    String pageTitle = settings.name ?? 'Unknown';
-
-    // Simple mapping for placeholder titles
-     switch (settings.name) {
-       case login:
-         pageTitle = 'Login';
-         break;
-       case detailResep:
-        // Get the sample recipe data
+    switch (settings.name) {
+      // === Halaman Tim ===
+      case login:
+        return _placeholder('Login');
+      case detailResep:
         final Recipe sampleRecipe = getSampleRecipe();
-        // Return the MaterialPageRoute for RecipeDetailScreen
         return MaterialPageRoute(
-          builder: (context) => RecipeDetailScreen(recipe: sampleRecipe),
+          builder: (_) => RecipeDetailScreen(recipe: sampleRecipe),
           settings: settings,
         );
-       case bookmark:
-         pageTitle = 'Bookmark';
-         break;
-       case homepage:
-         pageTitle = 'Homepage';
-         break;
-       case accountSetup:
-         pageTitle = 'Account Setup';
-         break;
-       case profile:
-         pageTitle = 'Profile';
-         break;
-       case appSettings:
-         pageTitle = 'Settings';
-         break;
-       case about:
-         pageTitle = 'About';
-         break;
-       case welcome:
-         pageTitle = 'Welcome Page';
-         break;
-       case tambahResep:
-         pageTitle = 'Tambah Resep';
-         break;
-       case notifikasi:
-         pageTitle = 'Notifikasi';
-         break;
-       default:
-         pageTitle = 'Unknown Page';
-     }
+      case bookmark:
+        return _placeholder('Bookmark');
+      case homepage:
+        return _placeholder('Homepage');
+      case accountSetup:
+        return _placeholder('Account Setup');
+      case profile:
+        return MaterialPageRoute(
+          builder: (_) => const ProfileScreen(),
+          settings: settings,
+        );
+      case appSettings:
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(),
+          settings: settings,
+        );
+      case about:
+        return MaterialPageRoute(
+          builder: (_) => const AboutScreen(),
+          settings: settings,
+        );
+      case welcome:
+        return _placeholder('Welcome Page');
+      case tambahResep:
+        return _placeholder('Tambah Resep');
+      case notifikasi:
+        return _placeholder('Notifikasi');
 
+      // === Halaman Tambahan dari Versimu ===
+      case heartbite:
+        return MaterialPageRoute(
+          builder: (_) => const HeartbiteScreen(),
+          settings: settings,
+        );
+      case following:
+        return MaterialPageRoute(
+          builder: (_) => const FollowingScreen(),
+          settings: settings,
+        );
+      case followers:
+        return MaterialPageRoute(
+          builder: (_) => const FollowersScreen(),
+          settings: settings,
+        );
+      case settingsCountry:
+        return MaterialPageRoute(
+          builder: (_) => const CountryScreen(),
+          settings: settings,
+        );
+      case settingsNotif:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationPreferencesScreen(),
+          settings: settings,
+        );
+      case editProfile:
+        return MaterialPageRoute(
+          builder: (_) => const EditProfileScreen(),
+          settings: settings,
+        );
+
+      // === Default: Page Not Found ===
+      default:
+        return _placeholder('Unknown Page');
+    }
+  }
+
+  static MaterialPageRoute _placeholder(String title) {
     return MaterialPageRoute(
-      builder: (context) => PlaceholderPage(title: pageTitle),
-      settings: settings, // Pass settings for potential arguments later
+      builder: (_) => PlaceholderPage(title: title),
+      settings: RouteSettings(name: title),
     );
   }
 }
