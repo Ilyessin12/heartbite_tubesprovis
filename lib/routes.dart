@@ -5,6 +5,9 @@ import 'recipe_detail/screens/recipe_detail_screen.dart';
 import 'recipe_detail/recipe_detail.dart'; // Import the file with getSampleRecipe
 import 'recipe_detail/models/recipe.dart'; // Import the Recipe model
 
+//import bookmark
+import 'bookmark/bookmark.dart';
+
 // Define placeholder pages for now
 class PlaceholderPage extends StatelessWidget {
   final String title;
@@ -59,8 +62,10 @@ class AppRoutes {
           settings: settings,
         );
        case bookmark:
-         pageTitle = 'Bookmark';
-         break;
+         return MaterialPageRoute(
+           builder: (context) => BookmarkScreen(), // Assuming you have a BookmarkScreen widget
+           settings: settings,
+         );
        case homepage:
          pageTitle = 'Homepage';
          break;
