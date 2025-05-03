@@ -75,39 +75,10 @@ class AppRoutes {
           settings: settings,
         );
        case bookmark:
-         return MaterialPageRoute(
-           builder: (context) => BookmarkScreen(), // Assuming you have a BookmarkScreen widget
-           settings: settings,
-         );
-       case homepage:
-         pageTitle = 'Homepage';
-         break;
-       case accountSetup:
-         pageTitle = 'Account Setup';
-         break;
-       case profile:
-         pageTitle = 'Profile';
-         break;
-       case appSettings:
-         pageTitle = 'Settings';
-         break;
-       case about:
-         pageTitle = 'About';
-         break;
-       case welcome:
-         pageTitle = 'Welcome Page';
-         break;
-       case tambahResep:
-         pageTitle = 'Tambah Resep';
-         break;
-       case notifikasi:
-         pageTitle = 'Notifikasi';
-         break;
-       default:
-         pageTitle = 'Unknown Page';
-     }
-      case bookmark:
-        return _placeholder('Bookmark');
+        return MaterialPageRoute(
+          builder: (_) => const BookmarkScreen(),
+          settings: settings,
+        );
       case homepage:
         return _placeholder('Homepage');
       case accountSetup:
