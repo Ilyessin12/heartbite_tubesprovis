@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to take photos for bookmark covers</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs photos access to let you select bookmark cover images</string>
 </dict>
 </plist>

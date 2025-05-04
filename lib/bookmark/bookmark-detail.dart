@@ -10,21 +10,25 @@ import '../bottomnavbar/bottom-navbar.dart';
 // Import models from bookmark.dart
 import 'bookmark.dart' show BookmarkCategory, RecipeItem;
 
-class BookmarkDetailScreen extends StatelessWidget{
+// import from bookmark-edit.dart
+import 'bookmark-edit.dart' show BookmarkEditScreen;
+
+// import route for bookmark-create
+import 'bookmark-create.dart';
+
+class BookmarkDetailScreen extends StatelessWidget {
   final BookmarkCategory category;
 
-  const BookmarkDetailScreen({
-    Key? key,
-    required this.category,
-  }) : super(key: key);
+  const BookmarkDetailScreen({Key? key, required this.category})
+    : super(key: key);
 
-  void handleBottomNavTap(int index){
+  void handleBottomNavTap(int index) {
     // Handle navigation in a real app
     print('Navigated to index: $index');
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -44,18 +48,25 @@ class BookmarkDetailScreen extends StatelessWidget{
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 16.0),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0E0E0),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.add, color: Color(0xFF8E1616)),
-              onPressed: (){},
-            ),
+        Container(
+          margin: const EdgeInsets.only(right: 16.0),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF0E0E0),
+            shape: BoxShape.circle,
           ),
-        ],
+          child: IconButton(
+            icon: const Icon(Icons.add, color: Color(0xFF8E1616)),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BookmarkCreateScreen(),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
       ),
       body: SafeArea(
         child: Column(
@@ -74,42 +85,51 @@ class BookmarkDetailScreen extends StatelessWidget{
             ),
             // Recipe grid
             Expanded(
-              child: category.recipes.isEmpty
-                  ? Center(
-                      child: Text(
-                        'Tidak ada resep dalam kategori ini',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 16,
-                          color: Colors.grey,
+              child:
+                  category.recipes.isEmpty
+                      ? Center(
+                        child: Text(
+                          'Tidak ada resep dalam kategori ini',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: (category.recipes.length / 2).ceil(),
-                      itemBuilder: (context, rowIndex){
-                        final int startIdx = rowIndex * 2;
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: RecipeCard(recipe: category.recipes[startIdx]),
+                      )
+                      : ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: (category.recipes.length / 2).ceil(),
+                        itemBuilder: (context, rowIndex) {
+                          final int startIdx = rowIndex * 2;
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: RecipeCard(
+                                    recipe: category.recipes[startIdx],
+                                  ),
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: startIdx + 1 < category.recipes.length
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(bottom: 16.0),
-                                      child: RecipeCard(recipe: category.recipes[startIdx + 1]),
-                                    )
-                                  : const SizedBox(),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child:
+                                    startIdx + 1 < category.recipes.length
+                                        ? Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 16.0,
+                                          ),
+                                          child: RecipeCard(
+                                            recipe:
+                                                category.recipes[startIdx + 1],
+                                          ),
+                                        )
+                                        : const SizedBox(),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
             ),
           ],
         ),
@@ -120,9 +140,20 @@ class BookmarkDetailScreen extends StatelessWidget{
           // Edit button
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: ElevatedButton(
-              onPressed: (){},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => BookmarkEditScreen(category: category),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF8E1616),
                 foregroundColor: Colors.white,
@@ -144,7 +175,7 @@ class BookmarkDetailScreen extends StatelessWidget{
           BottomNavBar(
             currentIndex: 1, // 1 for bookmark screen
             onTap: handleBottomNavTap,
-            onFabPressed: (){
+            onFabPressed: () {
               // Handle FAB pressed action
               print('FAB pressed on BookmarkDetailScreen');
             },
@@ -155,16 +186,13 @@ class BookmarkDetailScreen extends StatelessWidget{
   }
 }
 
-class RecipeCard extends StatelessWidget{
+class RecipeCard extends StatelessWidget {
   final RecipeItem recipe;
 
-  const RecipeCard({
-    Key? key,
-    required this.recipe,
-  }) : super(key: key);
+  const RecipeCard({Key? key, required this.recipe}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Stack(
@@ -184,10 +212,7 @@ class RecipeCard extends StatelessWidget{
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                  ],
+                  colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
                   stops: const [0.6, 1.0],
                 ),
               ),
@@ -263,10 +288,7 @@ class RecipeCard extends StatelessWidget{
                     ),
                     const Text(
                       ' | ',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                     Text(
                       '${recipe.prepTime} Porsi',
@@ -277,10 +299,7 @@ class RecipeCard extends StatelessWidget{
                     ),
                     const Text(
                       ' | ',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                     Text(
                       '${recipe.cookTime} Menit',
