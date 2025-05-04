@@ -37,6 +37,9 @@ import 'login-register/verifMethod.dart';
 import 'login-register/resetPass.dart';
 
 
+// homepage
+import 'homepage/homepage.dart';
+
 // === Placeholder Sementara ===
 class PlaceholderPage extends StatelessWidget {
   final String title;
@@ -100,7 +103,10 @@ class AppRoutes {
           settings: settings,
         );
       case homepage:
-        return _placeholder('Homepage');
+        return MaterialPageRoute(
+          builder: (_) => const HomePage(),
+          settings: settings,
+        );
       case accountSetup:
         return _placeholder('Account Setup');
       case profile:

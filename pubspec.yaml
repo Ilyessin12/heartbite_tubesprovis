@@ -76,6 +76,9 @@ flutter:
     - assets/images/avatars/
     - assets/images/cookbooks/
     - assets/images/login/
+    - assets/images/homepage/
+    - assets/images/bookmark/
+    - assets/images/searchbar/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
