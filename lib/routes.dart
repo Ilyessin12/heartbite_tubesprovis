@@ -24,6 +24,15 @@ import 'recipe_detail/screens/notification_preferences_screen.dart';
 import 'recipe_detail/screens/about_screen.dart';
 import 'recipe_detail/screens/edit_profile_screen.dart';
 
+// === Halaman Login
+import 'login-register/login.dart';
+import 'login-register/auth.dart';
+import 'login-register/otp.dart';
+import 'login-register/register.dart';
+import 'login-register/forgotPass.dart';
+import 'login-register/verifMethod.dart';
+import 'login-register/resetPass.dart';
+
 
 // === Placeholder Sementara ===
 class PlaceholderPage extends StatelessWidget {
@@ -65,7 +74,10 @@ class AppRoutes {
     switch (settings.name) {
       // === Halaman Tim ===
       case login:
-        return _placeholder('Login');
+        return MaterialPageRoute(
+          builder: (_) => const LoginPage(),
+          settings: settings,
+        );
       case detailResep:
         final Recipe sampleRecipe = getSampleRecipe();
         return MaterialPageRoute(

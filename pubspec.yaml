@@ -38,6 +38,9 @@ dependencies:
   
   # For responsive layouts
   flutter_screenutil: ^5.7.0
+  iconify_flutter: ^0.0.7
+  solar_icons: ^0.0.5
+  iconoir_flutter: ^7.11.0
 
 dev_dependencies:
   flutter_test:

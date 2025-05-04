@@ -1,387 +1,310 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:solar_icons/solar_icons.dart';
 
-class BookmarkScreen extends StatefulWidget {
-  const BookmarkScreen({super.key});
+// Import navigation components
+import '../bottomnavbar/bottom-navbar.dart';
+import 'bookmark-detail.dart';
+
+// Model for bookmark categories
+class BookmarkCategory{
+  final String name;
+  final String imageUrl;
+  final List<RecipeItem> recipes;
+  bool isSelected;
+
+  BookmarkCategory({
+    required this.name,
+    required this.imageUrl,
+    required this.recipes,
+    this.isSelected = false,
+  });
+}
+
+// Model for recipe items
+class RecipeItem{
+  final String name;
+  final String imageUrl;
+  final double rating;
+  final int reviewCount;
+  final int calories;
+  final int prepTime;
+  final int cookTime;
+
+  RecipeItem({
+    required this.name,
+    required this.imageUrl,
+    required this.rating,
+    required this.reviewCount,
+    required this.calories,
+    required this.prepTime,
+    required this.cookTime,
+  });
+}
+
+class BookmarkScreen extends StatefulWidget{
+  const BookmarkScreen({Key? key}) : super(key: key);
 
   @override
   State<BookmarkScreen> createState() => _BookmarkScreenState();
 }
 
-class _BookmarkScreenState extends State<BookmarkScreen> {
-  // Current selected category
-  String? selectedCategory;
-
-  // Sample data for categories
-  final List<Map<String, dynamic>> categories = [
-    {
-      'name': 'Saved',
-      'image': 'assets/images/food1.jpg',
-    },
-    {
-      'name': 'Weekend Recipe',
-      'image': 'assets/images/food2.jpg',
-    },
-    {
-      'name': 'Dinner',
-      'image': 'assets/images/food3.jpg',
-    },
+class _BookmarkScreenState extends State<BookmarkScreen>{
+  // Sample data for bookmark categories
+  final List<BookmarkCategory> categories = [
+    BookmarkCategory(
+      name: 'Saved',
+      imageUrl: 'placeholder_image.jpg',
+      recipes: [],
+    ),
+    BookmarkCategory(
+      name: 'Weekend Recipe',
+      imageUrl: 'placeholder_image.jpg',
+      recipes: [
+        RecipeItem(
+          name: 'Fruity blueberry toast',
+          imageUrl: 'placeholder_image.jpg',
+          rating: 4.8,
+          reviewCount: 128,
+          calories: 23,
+          prepTime: 2,
+          cookTime: 12,
+        ),
+        RecipeItem(
+          name: 'Fruity blackberry toast',
+          imageUrl: 'placeholder_image.jpg',
+          rating: 4.8,
+          reviewCount: 128,
+          calories: 24,
+          prepTime: 2,
+          cookTime: 12,
+        ),
+      ],
+    ),
+    BookmarkCategory(
+      name: 'Dinner',
+      imageUrl: 'placeholder_image.jpg',
+      recipes: [],
+    ),
   ];
 
-  // Sample data for recipes
-  final List<Map<String, dynamic>> recipes = [
-    {
-      'name': 'Fruity blueberry toast',
-      'image': 'assets/images/blueberry_toast.jpg',
-      'rating': 4.5,
-      'reviews': 108,
-      'calories': 25,
-      'protein': '1.2 Prot',
-      'time': '15 min',
-      'category': 'Weekend Recipe',
-    },
-    {
-      'name': 'Fruity blackberry toast',
-      'image': 'assets/images/blackberry_toast.jpg',
-      'rating': 4.5,
-      'reviews': 108,
-      'calories': 24,
-      'protein': '1.2 Prot',
-      'time': '12 min',
-      'category': 'Weekend Recipe',
-    },
-  ];
+  // Track selected categories for deletion
+  Set<int> selectedCategories = {};
+  
+  void toggleCategorySelection(int index){
+    // Don't allow selection of "Saved" category
+    if(categories[index].name == 'Saved'){
+      return;
+    }
+
+    setState(() {
+      if(selectedCategories.contains(index)){
+        selectedCategories.remove(index);
+      }
+      else {
+        selectedCategories.add(index);
+      }
+    });
+  }
+
+  void deleteSelectedCategories(){
+    setState(() {
+      // Sort in reverse order to avoid index shifting issues
+      final toDelete = selectedCategories.toList()..sort((a, b) => b.compareTo(a));
+      
+      for(final index in toDelete){
+        if(categories[index].name != 'Saved'){
+          categories.removeAt(index);
+        }
+      }
+      
+      // Clear selections after deletion
+      selectedCategories.clear();
+    });
+  }
+
+  void handleBottomNavTap(int index){
+    // In a real app, you'd navigate to different screens
+    print('Navigated to index: $index');
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: selectedCategories.isNotEmpty
+          ? Text(
+              '${selectedCategories.length} item selected',
+              style: GoogleFonts.dmSans(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            )
+          : Text(
+              'Bookmark',
+              style: GoogleFonts.dmSans(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: selectedCategories.isNotEmpty
+            ? () => setState(() => selectedCategories.clear())
+            : () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          selectedCategories.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.delete, color: Color(0xFF8E1616)),
+                  onPressed: deleteSelectedCategories,
+                )
+              : Container(
+                  margin: const EdgeInsets.only(right: 16.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0E0E0),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.add, color: Color(0xFF8E1616)),
+                    onPressed: (){},
+                  ),
+                ),
+        ],
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // App bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Back button
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF8E1616),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 18),
-                      onPressed: () {
-                        // Handle back button press
-                        if (selectedCategory != null) {
-                          setState(() {
-                            selectedCategory = null;
-                          });
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                  ),
-                  
-                  // Title
-                  Text(
-                    'Bookmark',
-                    style: GoogleFonts.dmSans(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  
-                  // Add button
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.pink.shade50,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.add, color: Colors.black, size: 24),
-                      onPressed: () {
-                        // Handle add button press
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
-            // Category title (only shown when a category is selected)
-            if (selectedCategory != null)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 16.0),
-                  child: Text(
-                    selectedCategory!,
-                    style: GoogleFonts.dmSans(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            
-            // Main content
-            Expanded(
-              child: selectedCategory == null
-                  ? _buildCategoriesGrid()
-                  : _buildRecipesList(selectedCategory!),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-    );
-  }
-
-  Widget _buildCategoriesGrid() {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16.0),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-        childAspectRatio: 1.0,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        final category = categories[index];
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedCategory = category['name'];
-            });
-          },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                // Placeholder for the image
-                Container(
-                  color: Colors.grey.shade300,
-                  child: const Center(
-                    child: Icon(Icons.image, size: 40, color: Colors.grey),
-                  ),
-                ),
-                // Gradient overlay
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.7),
-                      ],
-                    ),
-                  ),
-                ),
-                // Category name
-                Positioned(
-                  left: 12,
-                  bottom: 12,
-                  child: Text(
-                    category['name'],
-                    style: GoogleFonts.dmSans(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        child: GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 1,
           ),
-        );
-      },
-    );
-  }
-
-  Widget _buildRecipesList(String category) {
-    final categoryRecipes = recipes.where((recipe) => recipe['category'] == category).toList();
-    
-    return GridView.builder(
-      padding: const EdgeInsets.all(16.0),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-        childAspectRatio: 0.7,
-      ),
-      itemCount: categoryRecipes.length,
-      itemBuilder: (context, index) {
-        final recipe = categoryRecipes[index];
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(16.0),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // Placeholder for the image
-              Container(
-                color: Colors.grey.shade300,
-                child: const Center(
-                  child: Icon(Icons.image, size: 40, color: Colors.grey),
-                ),
-              ),
-              
-              // Bookmark icon
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: const Icon(
-                    Icons.bookmark,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ),
-              
-              // Recipe details at the bottom
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.8),
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Rating
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${recipe['rating']} (${recipe['reviews']} reviews)',
-                            style: GoogleFonts.dmSans(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
+          itemCount: categories.length,
+          itemBuilder: (context, index){
+            return GestureDetector(
+              onTap: (){
+                if(selectedCategories.isNotEmpty){
+                  toggleCategorySelection(index);
+                }
+                else {
+                  // Navigate to category detail
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookmarkDetailScreen(
+                        category: categories[index],
                       ),
-                      const SizedBox(height: 4),
-                      
-                      // Recipe name
-                      Text(
-                        recipe['name'],
-                        style: GoogleFonts.dmSans(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }
+              },
+              onLongPress: (){
+                toggleCategorySelection(index);
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    // Category image
+                    Image.asset(
+                      'assets/images/cookbooks/placeholder_image.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    // Gradient overlay
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7),
+                          ],
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
-                      
-                      // Recipe stats
-                      Row(
-                        children: [
-                          _buildStatChip('${recipe['calories']} Cal'),
-                          const SizedBox(width: 8),
-                          _buildStatChip(recipe['protein']),
-                          const SizedBox(width: 8),
-                          _buildStatChip(recipe['time']),
-                        ],
+                    ),
+                    // Category name
+                    Positioned(
+                      left: 10,
+                      bottom: 10,
+                      child: Text(
+                        categories[index].name,
+                        style: GoogleFonts.dmSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ],
+                    ),
+                    // Selection indicator
+                    if(selectedCategories.contains(index))
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        child: Container(
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.check_circle,
+                            size: 24,
+                            color: Color(0xFFAFF4C6),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Delete button (only show when items are selected)
+          if(selectedCategories.isNotEmpty)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: ElevatedButton(
+                onPressed: deleteSelectedCategories,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF8E1616),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  'Delete Bookmark',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildStatChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.dmSans(
-          color: Colors.white,
-          fontSize: 10,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      height: 70,
-      decoration: const BoxDecoration(
-        color: Color(0xFF8E1616),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.white),
-            onPressed: () {},
-          ),
-          // Center floating button
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
             ),
-            child: IconButton(
-              icon: const Icon(Icons.add, color: Colors.black),
-              onPressed: () {},
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.bookmark, color: Colors.white),
-            onPressed: () {},
+          // Navigation bar with integrated FAB
+          BottomNavBar(
+            currentIndex: 1, // 1 for bookmark screen
+            onTap: handleBottomNavTap,
+            onFabPressed: (){
+              // Handle FAB pressed action
+              print('FAB pressed on BookmarkScreen');
+            },
           ),
         ],
       ),
