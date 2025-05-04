@@ -10,9 +10,9 @@ class IngredientsScreen extends StatefulWidget {
   final Recipe recipe;
   
   const IngredientsScreen({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   @override
   State<IngredientsScreen> createState() => _IngredientsScreenState();

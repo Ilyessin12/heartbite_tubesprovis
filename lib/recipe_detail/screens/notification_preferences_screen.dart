@@ -4,7 +4,7 @@ import '../widgets/custom_back_button.dart';
 import '../widgets/setting_item.dart';
 
 class NotificationPreferencesScreen extends StatefulWidget {
-  const NotificationPreferencesScreen({Key? key}) : super(key: key);
+  const NotificationPreferencesScreen({super.key});
 
   @override
   State<NotificationPreferencesScreen> createState() => _NotificationPreferencesScreenState();

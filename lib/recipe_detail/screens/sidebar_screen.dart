@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class SidebarScreen extends StatelessWidget {
-  const SidebarScreen({Key? key}) : super(key: key);
+  const SidebarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

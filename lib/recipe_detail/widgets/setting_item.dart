@@ -7,11 +7,11 @@ class SettingItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const SettingItem({
-    Key? key,
+    super.key,
     required this.title,
     this.trailing,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

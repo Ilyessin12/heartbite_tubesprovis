@@ -9,13 +9,13 @@ class UserListItem extends StatelessWidget {
   final VoidCallback onFollowTap;
 
   const UserListItem({
-    Key? key,
+    super.key,
     required this.name,
     required this.username,
     required this.avatarUrl,
     this.isFollowing = false,
     required this.onFollowTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

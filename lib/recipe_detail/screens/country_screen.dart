@@ -4,7 +4,7 @@ import '../widgets/custom_back_button.dart';
 import '../widgets/country_list_item.dart';
 
 class CountryScreen extends StatefulWidget {
-  const CountryScreen({Key? key}) : super(key: key);
+  const CountryScreen({super.key});
 
   @override
   State<CountryScreen> createState() => _CountryScreenState();

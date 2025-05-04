@@ -6,10 +6,10 @@ class GalleryScreen extends StatefulWidget {
   final int initialIndex;
   
   const GalleryScreen({
-    Key? key,
+    super.key,
     required this.images,
     this.initialIndex = 0,
-  }) : super(key: key);
+  });
 
   @override
   State<GalleryScreen> createState() => _GalleryScreenState();

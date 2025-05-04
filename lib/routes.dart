@@ -9,8 +9,6 @@ import 'recipe_detail/models/recipe.dart'; // Import the Recipe model
 import 'bookmark/bookmark.dart';
 
 // Define placeholder pages for now
-import 'recipe_detail/recipe_detail.dart';
-import 'recipe_detail/models/recipe.dart';
 
 // === Halaman Tim (Default) ===
 // (Halaman lainnya tetap gunakan Placeholder)

@@ -6,7 +6,7 @@ import '../widgets/profile_stats.dart';
 import '../widgets/recipe_card.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();

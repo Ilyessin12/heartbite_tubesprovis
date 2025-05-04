@@ -4,7 +4,7 @@ import '../widgets/custom_back_button.dart';
 import '../widgets/user_list_item.dart';
 
 class FollowingScreen extends StatelessWidget {
-  const FollowingScreen({Key? key}) : super(key: key);
+  const FollowingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

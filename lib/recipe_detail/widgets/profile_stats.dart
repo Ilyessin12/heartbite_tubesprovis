@@ -9,13 +9,13 @@ class ProfileStats extends StatelessWidget {
   final VoidCallback onFollowersTap;
 
   const ProfileStats({
-    Key? key,
+    super.key,
     required this.recipes,
     required this.following,
     required this.followers,
     required this.onFollowingTap,
     required this.onFollowersTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

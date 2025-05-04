@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: Align(
                                 alignment: Alignment.topRight, // tengah layar
-                                child: Container(
+                                child: SizedBox(
                                   width: 300, // atau sesuai kebutuhan
                                   child: Text(
                                     'Lupa kata sandi?',

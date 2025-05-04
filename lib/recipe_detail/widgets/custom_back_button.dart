@@ -4,7 +4,7 @@ import '../theme/app_theme.dart';
 class CustomBackButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
-  const CustomBackButton({Key? key, this.onPressed}) : super(key: key);
+  const CustomBackButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

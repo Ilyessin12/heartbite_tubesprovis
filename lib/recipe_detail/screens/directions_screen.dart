@@ -9,9 +9,9 @@ class DirectionsScreen extends StatefulWidget {
   final Recipe recipe;
   
   const DirectionsScreen({
-    Key? key,
+    super.key,
     required this.recipe,
-  }) : super(key: key);
+  });
 
   @override
   State<DirectionsScreen> createState() => _DirectionsScreenState();

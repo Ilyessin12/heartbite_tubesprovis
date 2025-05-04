@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class HeartbiteScreen extends StatefulWidget {
-  const HeartbiteScreen({Key? key}) : super(key: key);
+  const HeartbiteScreen({super.key});
 
   @override
   State<HeartbiteScreen> createState() => _HeartbiteScreenState();
@@ -35,7 +35,7 @@ class _HeartbiteScreenState extends State<HeartbiteScreen> {
 
 
 class _CustomSidebarDrawer extends StatelessWidget {
-  const _CustomSidebarDrawer({Key? key}) : super(key: key);
+  const _CustomSidebarDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

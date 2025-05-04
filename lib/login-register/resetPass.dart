@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'register.dart';
 
 class ResetPassPage extends StatefulWidget {
   const ResetPassPage({super.key});
