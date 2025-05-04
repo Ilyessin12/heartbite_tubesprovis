@@ -34,6 +34,8 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
                           _newMenuFromFollowing = value;
                         });
                       },
+                      activeColor: AppColors.primary, // Thumb merah saat ON
+                      activeTrackColor: AppColors.primary.withOpacity(0.4),
                     ),
                   ),
                   SettingItem(
@@ -45,6 +47,8 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
                           _likesOnPosts = value;
                         });
                       },
+                      activeColor: AppColors.primary, // Thumb merah saat ON
+                      activeTrackColor: AppColors.primary.withOpacity(0.4),
                     ),
                   ),
                   SettingItem(
@@ -56,6 +60,8 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
                           _comments = value;
                         });
                       },
+                      activeColor: AppColors.primary, // Thumb merah saat ON
+                      activeTrackColor: AppColors.primary.withOpacity(0.4),
                     ),
                   ),
                 ],
@@ -69,10 +75,21 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
                   onPressed: () {
                     Navigator.pop(context);
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary, // Merah sesuai theme
+                    foregroundColor: Colors.white,      // Warna teks putih
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Simpan'),
+                    Padding(
+                      padding: EdgeInsets.only(left: 12.0), // Geser teks ke kanan 8 pixel
+                      child: Text('Simpan'),
+                    ),
                       Icon(Icons.chevron_right, size: 20),
                     ],
                   ),

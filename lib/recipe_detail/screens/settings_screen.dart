@@ -65,6 +65,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary, // Merah sesuai theme
+                    foregroundColor: Colors.white,      // Warna teks putih
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
                   child: const Text('Logout Akun'),
                 ),
               ),

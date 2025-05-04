@@ -53,6 +53,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary, // Ubah warna latar belakang menjadi merah
+                    foregroundColor: Colors.white, // Ubah warna teks/ikon menjadi putih
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween, // Membuat jarak antara teks dan ikon
                     children: [
