@@ -7,6 +7,9 @@ import 'recipe_detail/models/recipe.dart'; // Import the Recipe model
 
 //import bookmark
 import 'bookmark/bookmark.dart';
+import 'bookmark/bookmark-edit.dart';
+import 'bookmark/bookmark-create.dart';
+import 'bookmark/bookmark-detail.dart';
 
 // Define placeholder pages for now
 
@@ -50,6 +53,7 @@ class PlaceholderPage extends StatelessWidget {
 
 // === AppRoutes ===
 class AppRoutes {
+  // Halaman Utama
   static const String login = '/login';
   static const String detailResep = '/detail-resep';
   static const String bookmark = '/bookmark';
@@ -62,13 +66,19 @@ class AppRoutes {
   static const String tambahResep = '/tambah-resep';
   static const String notifikasi = '/notifikasi';
 
-  // Tambahan routes milikmu:
+  // sidebar routes
   static const String heartbite = '/heartbite';
   static const String following = '/following';
   static const String followers = '/followers';
   static const String settingsCountry = '/settings/country';
   static const String settingsNotif = '/settings/notifications';
   static const String editProfile = '/edit-profile';
+
+  // bookmark routes
+  static const String bookmarkEdit = '/bookmark/edit';
+  static const String bookmarkCreate = '/bookmark/create';
+  static const String bookmarkDetail = '/bookmark/detail';
+
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -115,7 +125,7 @@ class AppRoutes {
       case notifikasi:
         return _placeholder('Notifikasi');
 
-      // === Halaman Tambahan dari Versimu ===
+      // === sidebar routes ===
       case heartbite:
         return MaterialPageRoute(
           builder: (_) => const HeartbiteScreen(),
@@ -144,6 +154,13 @@ class AppRoutes {
       case editProfile:
         return MaterialPageRoute(
           builder: (_) => const EditProfileScreen(),
+          settings: settings,
+        );
+
+      // === bookmark routes ===
+      case bookmarkCreate:
+        return MaterialPageRoute(
+          builder: (_) => const BookmarkCreateScreen(),
           settings: settings,
         );
 

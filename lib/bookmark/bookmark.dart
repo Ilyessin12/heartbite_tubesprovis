@@ -6,6 +6,9 @@ import 'package:solar_icons/solar_icons.dart';
 import '../bottomnavbar/bottom-navbar.dart';
 import 'bookmark-detail.dart';
 
+// for routing to bookmark-create
+import 'bookmark-create.dart';
+
 // Model for bookmark categories
 class BookmarkCategory{
   final String name;
@@ -160,23 +163,30 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
             : () => Navigator.of(context).pop(),
         ),
         actions: [
-          selectedCategories.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.delete, color: Color(0xFF8E1616)),
-                  onPressed: deleteSelectedCategories,
-                )
-              : Container(
-                  margin: const EdgeInsets.only(right: 16.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0E0E0),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.add, color: Color(0xFF8E1616)),
-                    onPressed: (){},
-                  ),
+        selectedCategories.isNotEmpty
+            ? IconButton(
+                icon: const Icon(Icons.delete, color: Color(0xFF8E1616)),
+                onPressed: deleteSelectedCategories,
+              )
+            : Container(
+                margin: const EdgeInsets.only(right: 16.0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0E0E0),
+                  shape: BoxShape.circle,
                 ),
-        ],
+                child: IconButton(
+                  icon: const Icon(Icons.add, color: Color(0xFF8E1616)),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BookmarkCreateScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+      ],
       ),
       body: SafeArea(
         child: GridView.builder(
