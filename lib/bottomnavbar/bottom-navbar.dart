@@ -27,7 +27,7 @@ class BottomNavBar extends StatelessWidget{
               topRight: Radius.circular(0),
             ),
           ),
-          height: 70,
+          height: 55,
           child: Row(
             children: [
               // Menggunakan Expanded dengan flex untuk mengatur posisi tombol
