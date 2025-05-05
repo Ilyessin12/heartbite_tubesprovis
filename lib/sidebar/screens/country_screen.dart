@@ -111,7 +111,7 @@ class _CountryScreenState extends State<CountryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween, // Membuat jarak antara teks dan ikon
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 16.0), // Geser teks ke kanan
+                        padding: const EdgeInsets.only(left: 160.0), // Geser teks ke kanan
                         child: const Text('Simpan'),
                       ),
                       const Icon(Icons.chevron_right, size: 20),

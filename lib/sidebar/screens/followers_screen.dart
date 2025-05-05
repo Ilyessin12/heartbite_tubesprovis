@@ -12,32 +12,32 @@ class FollowersScreen extends StatelessWidget {
       {
         'name': 'Griffin',
         'username': '@griffin',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar1.jpg',
       },
       {
         'name': 'Senator Armstrong',
         'username': '@senatorarmstrong',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar2.jpg',
       },
       {
         'name': 'Johnny Cann',
         'username': '@johnnycann',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar3.jpg',
       },
       {
         'name': 'Anna Villanueva',
         'username': '@annavillanueva',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar4.jpg',
       },
       {
         'name': 'Elliot Rodgers',
         'username': '@elliotrodgers',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar5.jpg',
       },
       {
         'name': 'Dekan',
         'username': '@dekanofficial',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar2.jpg',
       },
     ];
 
