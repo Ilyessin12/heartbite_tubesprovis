@@ -15,12 +15,11 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: MediaQuery.of(context).size.width * -0.475,
-            left: MediaQuery.of(context).size.width * -0.75,
+          Positioned.fill(
             child: Image.asset(
-              'assets/images/login/spiral.png',
-              width: MediaQuery.of(context).size.width * 1.5 // sesuaikan ukuran jika perlu
+              'assets/images/Ornament.png',
+              fit: BoxFit.contain,
+              alignment: Alignment.topLeft,
             ),
           ),
           SafeArea(
@@ -156,7 +155,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                                 ),
                                 child: Text(
                                   'Lanjutkan',
-                                  style: GoogleFonts.dmSans(),
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),
