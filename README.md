@@ -35,30 +35,38 @@ Aplikasi berbagi resep berbasis Flutter yang dikembangkan oleh Kelompok 23 untuk
 - Android Studio / VS Code
 - Android SDK & NDK
 ### Dependensi
-dependencies: <br/>
+```
+dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.7.0
   iconify_flutter: ^0.0.7
+```
 ### Instalasi
 1. Klon repositori
+   ```
    git clone [url-repositori]
+   ```
 3. Instal dependensi
+   ```
    flutter pub get
+   ```
 5. Jalankan aplikasi
+   ```
    flutter run
+   ```
 
 # 🏗️ Struktur Proyek
-lib/
-├── welcome_pages/      # Layar perkenalan
-├── login-register/     # Alur autentikasi
-├── setup_pages/        # Pengaturan & preferensi pengguna
-├── notification_pages/ # Penanganan notifikasi
-├── bookmark/          # Bookmark resep
-├── homepage/          # Layar utama aplikasi
-├── sidebar/           # Navigasi & pengaturan
+lib/ <br/>
+├── welcome_pages/      # Layar perkenalan <br/>
+├── login-register/     # Alur autentikasi <br/>
+├── setup_pages/        # Pengaturan & preferensi pengguna <br/>
+├── notification_pages/ # Penanganan notifikasi <br/>
+├── bookmark/          # Bookmark resep <br/>
+├── homepage/          # Layar utama aplikasi <br/>
+├── sidebar/           # Navigasi & pengaturan <br/>
 └── recipe_detail/     # Tampilan & interaksi resep
 
 # 📱 Screenshot Layar
