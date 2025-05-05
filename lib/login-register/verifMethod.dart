@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'otp.dart';
 
 class VerifMethodPage extends StatefulWidget {
@@ -18,22 +19,18 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
           child: SingleChildScrollView(
-            // memungkinkan scroll
             child: ConstrainedBox(
-              // agar tidak tak terbatas tingginya
               constraints: BoxConstraints(
-                minHeight:
-                    MediaQuery.of(context).size.height -
+                minHeight: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top -
-                    16, // untuk menyamakan dengan padding vertikal total
+                    16,
               ),
               child: IntrinsicHeight(
-                // agar Column bisa mengatur tinggi anak-anaknya
                 child: Column(
                   children: [
-                    // Baris atas: tombol back & login
+                    // Tombol back kecil
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Ink(
                           decoration: const ShapeDecoration(
@@ -44,6 +41,7 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                             icon: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
+                              size: 20, // Ukuran ikon lebih kecil
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -52,15 +50,18 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.075,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.075),
+
+                    // Judul
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Metode',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Align(
@@ -68,28 +69,31 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                       child: Text(
                         'Verifikasi',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+
+                    // Deskripsi
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Silakan pilih metode verifikasi untuk mengatur ulang kata sandi akun Anda.',
                         textAlign: TextAlign.left,
+                        style: GoogleFonts.dmSans(fontSize: 14),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+
+                    // Tombol pilihan metode
                     Expanded(
                       child: Row(
                         children: [
                           Expanded(
                             child: SizedBox(
-                              width: double.infinity,
                               height: MediaQuery.of(context).size.height * 0.20,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -99,10 +103,9 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      _selectedMethod == 0 ||
-                                              _selectedMethod == -1
-                                          ? Color(0xFF8E1616).withOpacity(0.22)
-                                          : Color(0xFF462F4D),
+                                      _selectedMethod == 0 || _selectedMethod == -1
+                                          ? const Color(0xFF8E1616).withOpacity(0.22)
+                                          : const Color(0xFF462F4D),
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(28),
@@ -111,19 +114,22 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Icon(Icons.apple, size: 32),
-                                    SizedBox(height: 8),
-                                    Text('Metode A', textAlign: TextAlign.left),
+                                  children: [
+                                    const Icon(Icons.apple, size: 32),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Metode A',
+                                      style: GoogleFonts.dmSans(fontSize: 16),
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 6), // jarak antar tombol
+                          const SizedBox(width: 6),
                           Expanded(
                             child: SizedBox(
-                              width: double.infinity,
                               height: MediaQuery.of(context).size.height * 0.20,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -133,10 +139,9 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      _selectedMethod == 1 ||
-                                              _selectedMethod == -1
-                                          ? Color(0xFF8E1616).withOpacity(0.22)
-                                          : Color(0xFF462F4D),
+                                      _selectedMethod == 1 || _selectedMethod == -1
+                                          ? const Color(0xFF8E1616).withOpacity(0.22)
+                                          : const Color(0xFF462F4D),
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(28),
@@ -145,10 +150,14 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Icon(Icons.apple, size: 32),
-                                    SizedBox(height: 8),
-                                    Text('Metode B', textAlign: TextAlign.left),
+                                  children: [
+                                    const Icon(Icons.apple, size: 32),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Metode B',
+                                      style: GoogleFonts.dmSans(fontSize: 16),
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -157,7 +166,10 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                         ],
                       ),
                     ),
+
                     SizedBox(height: MediaQuery.of(context).size.height * 0.30),
+
+                    // Tombol Lanjutkan
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -169,20 +181,24 @@ class _VerifMethodPageState extends State<VerifMethodPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => OtpPage(),
+                                  builder: (context) => const OtpPage(),
                                 ),
                               );
-                              // if (_selectedMethod == 0) {
-                              // } else if (_selectedMethod == 1) {}
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF8E1616),
+                              backgroundColor: const Color(0xFF8E1616),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text('Lanjutkan'),
+                            child: Text(
+                              'Lanjutkan',
+                              style: GoogleFonts.dmSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ],
