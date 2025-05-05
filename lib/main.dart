@@ -37,11 +37,6 @@ import 'sidebar/screens/following_screen.dart';
 import 'sidebar/screens/notification_preferences_screen.dart';
 import 'sidebar/screens/profile_screen.dart';
 import 'sidebar/screens/settings_screen.dart';
-<<<<<<< Updated upstream
-import 'sidebar/screens/sidebar_screen.dart';
-
-=======
->>>>>>> Stashed changes
 //==== import detail resep pages
 import 'recipe_detail/recipe_detail.dart';
 import 'recipe_detail/screens/recipe_detail_screen.dart';
@@ -101,83 +96,6 @@ class NavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
-    // Daftar tombol dan halaman yang ingin dituju
-    final List<PageItem> pages = [
-      // welcome pages
-      PageItem('Welcome Screen', const WelcomeScreen()),
-      PageItem('Welcome 1 Screen', const Welcome1Screen()),
-      PageItem('Welcome 2 Screen', const Welcome2Screen()),
-      PageItem('Welcome 3 Screen', const Welcome3Screen()),
-
-      //login pages
-      PageItem('authentication', const Auth()),
-      PageItem('Login', const LoginPage()),
-      PageItem('Register', const RegisterPage()),
-      PageItem('Forgot Password', const ForgotPassPage()),
-      PageItem('Reset Password', const ResetPassPage()),
-      PageItem('OTP', const OtpPage()),
-      PageItem('Verification Method', const VerifMethodPage()),
-
-      //setup pages
-      PageItem('Setup Allergies', const SetupAllergiesPage()),
-      PageItem('Setup Diets', const SetupDietsPage()),
-      PageItem('Setup Account', const SetupAccountPage()),
-      PageItem('Finish Setup', const FinishSetupScreen()),
-      //notification pages
-      PageItem('Empty Notification', const EmptyNotificationPage()),
-      PageItem('Notification', const NotificationPage()),
-      //bookmark pages
-      PageItem('Bookmark', const BookmarkScreen()),
-      PageItem('Bookmark Create', const BookmarkCreateScreen()),
-      //TODO: Betulin detail ama edit bookmark
-      //PageItem('Bookmark Detail', const BookmarkDetailScreen()), 
-      //PageItem('Bookmark Edit', const BookmarkEditScreen()),
-
-      //homepage pages
-      PageItem('Home Page', const HomePage()),
-      //TODO: Betulin homepage-detail Screen
-      //PageItem('Home Page Detail', const HomePageDetailScreen()),
-
-      // sidebar pages
-      PageItem('Profile Page', const ProfileScreen()),
-      PageItem('Edit Profile Page', const EditProfileScreen()),
-      PageItem('Followers Page', const FollowersScreen()),
-      PageItem('Following Page', const FollowingScreen()),
-      PageItem('Setting Page', const SettingsScreen()),
-      PageItem('Country Page', const CountryScreen()),
-      PageItem('Notification Preferences Page', const NotificationPreferencesScreen()),
-      PageItem('About Page', const AboutScreen()),
-      PageItem('Sidebar Page', const SidebarScreen()),
-
-
-      // detail resep pages
-      PageItem('Recipe Detail', RecipeDetailScreen(
-        recipe: getSampleRecipe(),
-      )),
-      PageItem('Recipe Ingredients', IngredientsScreen(
-      recipe: getSampleRecipe(),
-      )),
-      PageItem('Recipe Directions', DirectionsScreen(
-        recipe: getSampleRecipe(),
-      )),
-      PageItem('Recipe Gallery', GalleryScreen(
-      images: getSampleRecipe().galleryImages,
-      initialIndex: 0,
-    )),
-    PageItem('Recipe Discussion', DiscussionScreen(
-      comments: getSampleRecipe().comments,
-      onCommentsUpdated: (updatedComments) {
-        print('Comments updated: ${updatedComments.length} comments');
-      },
-    )),
-
-
-      //++++++++++++++++++++ CONTOH PEMAKAIAN ++++++++++++++++++++++
-      // Tambah halaman lain di sini
-      // PageItem('Another Page', const AnotherPage()),
-    ];
-=======
     // Daftar tombol dan halaman yang ingin dituju, dengan deskripsi
     final Map<String, List<PageItem>> categorizedPages = {
       'Welcome Pages': [
@@ -224,8 +142,8 @@ class NavigationPage extends StatelessWidget {
       'Bookmark Pages': [
         PageItem('Bookmark', const BookmarkScreen(),
             'Page listing all bookmarked recipes.'),
-        PageItem('Bookmark Create', const BookmarkCreateScreen(),
-            'Page to create a new bookmark for a recipe.'),
+        //PageItem('Bookmark Create', const BookmarkCreateScreen(),
+        //    'Page to create a new bookmark for a recipe.'),
         // PageItem('Bookmark Detail', const BookmarkDetailScreen(),
         //     'Page showing details of a bookmarked recipe.'),
         // PageItem('Bookmark Edit', const BookmarkEditScreen(),
@@ -284,7 +202,6 @@ class NavigationPage extends StatelessWidget {
             'Page for viewing and adding recipe comments.'),
       ],
     };
->>>>>>> Stashed changes
 
     return Scaffold(
       backgroundColor: Colors.white, // Ensure scaffold background is white
