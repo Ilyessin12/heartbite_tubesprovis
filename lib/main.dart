@@ -21,7 +21,8 @@ import 'setup_pages/finishsetup.dart';
 import 'notification_pages/empty_notification.dart';
 import 'notification_pages/notification.dart';
 //===== import bookmark pages
-import 'bookmark/bookmark.dart';
+//temporary for bookmark to work
+import 'package:heartbite_tubesprovis/bookmark/bookmark.dart' as bookmark;
 import 'bookmark/bookmark-create.dart';
 import 'bookmark/bookmark-detail.dart';
 import 'bookmark/bookmark-edit.dart';
@@ -61,12 +62,16 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white, // Set background to white
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF8E1616),
-          primary: const Color(0xFF8E1616).withOpacity(0.2), // 20% opacity for buttons
+          primary: const Color(
+            0xFF8E1616,
+          ).withOpacity(0.2), // 20% opacity for buttons
           onPrimary: Colors.white, // White text for contrast
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF8E1616).withOpacity(0.3), // 20% opacity
+            backgroundColor: const Color(
+              0xFF8E1616,
+            ).withOpacity(0.3), // 20% opacity
             foregroundColor: Colors.white, // White text/icon on buttons
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -96,104 +101,267 @@ class NavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Dummy data for bookmark (TODO: replace with actual data STRUCTURE and logic)
+    final List<bookmark.RecipeItem> allSavedRecipes = [
+      bookmark.RecipeItem(
+        name: 'Roti Panggang Blueberry', // Was: Fruity blueberry toast
+        imageUrl: 'placeholder_image.jpg',
+        rating: 4.8,
+        reviewCount: 128,
+        calories: 23,
+        prepTime: 2, // Porsi
+        cookTime: 12, // Menit
+      ),
+      bookmark.RecipeItem(
+        name: 'Roti Panggang Blackberry', // Was: Fruity blackberry toast
+        imageUrl: 'placeholder_image.jpg',
+        rating: 4.8,
+        reviewCount: 128,
+        calories: 24,
+        prepTime: 2, // Porsi
+        cookTime: 12, // Menit
+      ),
+      // New recipes for Dinner (now also in Saved)
+      bookmark.RecipeItem(
+        name: 'Nasi Goreng Spesial',
+        imageUrl: 'placeholder_image.jpg',
+        rating: 4.5,
+        reviewCount: 210,
+        calories: 350,
+        prepTime: 2, // Porsi
+        cookTime: 20, // Menit
+      ),
+      bookmark.RecipeItem(
+        name: 'Ayam Bakar Madu',
+        imageUrl: 'placeholder_image.jpg',
+        rating: 4.9,
+        reviewCount: 305,
+        calories: 420,
+        prepTime: 4, // Porsi
+        cookTime: 45, // Menit
+      ),
+      bookmark.RecipeItem(
+        name: 'Sate Ayam Bumbu Kacang',
+        imageUrl: 'placeholder_image.jpg',
+        rating: 4.7,
+        reviewCount: 180,
+        calories: 380,
+        prepTime: 3, // Porsi
+        cookTime: 30, // Menit
+      ),
+    ];
+
+    // Dummy category for detail/edit examples
+    final dummyCategory = bookmark.BookmarkCategory(
+      name: "Contoh Kategori",
+      imageUrl: "placeholder_image.jpg",
+      recipes: [allSavedRecipes[0], allSavedRecipes[2]] // Example recipes
+    );
+
     // Daftar tombol dan halaman yang ingin dituju, dengan deskripsi
     final Map<String, List<PageItem>> categorizedPages = {
       'Welcome Pages': [
-        PageItem('Welcome Screen', const WelcomeScreen(),
-            'Halaman pembuka aplikasi HeartBite'),
-        PageItem('Welcome 1 Screen', const Welcome1Screen(),
-            'Pengenalan fitur-fitur utama aplikasi'),
-        PageItem('Welcome 2 Screen', const Welcome2Screen(),
-            'Penjelasan manfaat untuk pengguna'),
-        PageItem('Welcome 3 Screen', const Welcome3Screen(),
-            'Halaman terakhir sebelum autentikasi'),
+        PageItem(
+          'Welcome Screen',
+          const WelcomeScreen(),
+          'Halaman pembuka aplikasi HeartBite',
+        ),
+        PageItem(
+          'Welcome 1 Screen',
+          const Welcome1Screen(),
+          'Pengenalan fitur-fitur utama aplikasi',
+        ),
+        PageItem(
+          'Welcome 2 Screen',
+          const Welcome2Screen(),
+          'Penjelasan manfaat untuk pengguna',
+        ),
+        PageItem(
+          'Welcome 3 Screen',
+          const Welcome3Screen(),
+          'Halaman terakhir sebelum autentikasi',
+        ),
       ],
       'Login Pages': [
-        PageItem('Authentication', const Auth(),
-            'Halaman autentikasi utama untuk login atau registrasi'),
-        PageItem('Login', const LoginPage(), 
-            'Halaman login dengan email dan kata sandi'),
-        PageItem('Register', const RegisterPage(),
-            'Halaman pendaftaran akun baru'),
-        PageItem('Forgot Password', const ForgotPassPage(),
-            'Halaman untuk memulai pemulihan kata sandi'),
-        PageItem('Reset Password', const ResetPassPage(),
-            'Halaman untuk mengatur ulang kata sandi'),
-        PageItem('OTP', const OtpPage(),
-            'Halaman untuk memasukkan kode OTP'),
-        PageItem('Verification Method', const VerifMethodPage(),
-            'Pilih metode verifikasi untuk pemulihan akun'),
+        PageItem(
+          'Authentication',
+          const Auth(),
+          'Halaman autentikasi utama untuk login atau registrasi',
+        ),
+        PageItem(
+          'Login',
+          const LoginPage(),
+          'Halaman login dengan email dan kata sandi',
+        ),
+        PageItem(
+          'Register',
+          const RegisterPage(),
+          'Halaman pendaftaran akun baru',
+        ),
+        PageItem(
+          'Forgot Password',
+          const ForgotPassPage(),
+          'Halaman untuk memulai pemulihan kata sandi',
+        ),
+        PageItem(
+          'Reset Password',
+          const ResetPassPage(),
+          'Halaman untuk mengatur ulang kata sandi',
+        ),
+        PageItem('OTP', const OtpPage(), 'Halaman untuk memasukkan kode OTP'),
+        PageItem(
+          'Verification Method',
+          const VerifMethodPage(),
+          'Pilih metode verifikasi untuk pemulihan akun',
+        ),
       ],
       'Setup Pages': [
-        PageItem('Setup Allergies', const SetupAllergiesPage(),
-            'Atur alergi untuk personalisasi resep'),
-        PageItem('Setup Diets', const SetupDietsPage(),
-            'Pilih preferensi diet Anda'),
-        PageItem('Setup Account', const SetupAccountPage(),
-            'Lengkapi detail akun Anda'),
-        PageItem('Finish Setup', const FinishSetupScreen(),
-            'Konfirmasi penyelesaian pengaturan'),
+        PageItem(
+          'Setup Allergies',
+          const SetupAllergiesPage(),
+          'Atur alergi untuk personalisasi resep',
+        ),
+        PageItem(
+          'Setup Diets',
+          const SetupDietsPage(),
+          'Pilih preferensi diet Anda',
+        ),
+        PageItem(
+          'Setup Account',
+          const SetupAccountPage(),
+          'Lengkapi detail akun Anda',
+        ),
+        PageItem(
+          'Finish Setup',
+          const FinishSetupScreen(),
+          'Konfirmasi penyelesaian pengaturan',
+        ),
       ],
       'Notification Pages': [
-        PageItem('Empty Notification', const EmptyNotificationPage(),
-            'Tampilan saat tidak ada notifikasi'),
-        PageItem('Notification', const NotificationPage(),
-            'Daftar notifikasi pengguna'),
+        PageItem(
+          'Empty Notification',
+          const EmptyNotificationPage(),
+          'Tampilan saat tidak ada notifikasi',
+        ),
+        PageItem(
+          'Notification',
+          const NotificationPage(),
+          'Daftar notifikasi pengguna',
+        ),
       ],
       'Bookmark Pages': [
-        PageItem('Bookmark', const BookmarkScreen(),
-            'Daftar resep yang disimpan'),
+        //bookmark awal
+        PageItem(
+          'Bookmark',
+          const bookmark.BookmarkScreen(),
+          'Daftar resep yang disimpan',
+        ),
+
+        //create bookmark
+        PageItem(
+          'Create Bookmark',
+          BookmarkCreateScreen(savedRecipes: allSavedRecipes),
+          'Halaman untuk membuat bookmark baru',
+        ),
+        //edit bookmark
+        PageItem(
+          'Edit Bookmark',
+          BookmarkEditScreen(category: dummyCategory),
+          'Halaman untuk mengedit bookmark yang ada',
+        ),
+
+        //detail bookmark
+        PageItem(
+          'Bookmark Detail',
+          BookmarkDetailScreen(category: dummyCategory),
+          'Halaman detail resep bookmark',
+        ),
+
       ],
+  
       'Homepage Pages': [
-        PageItem('Home Page', const HomePage(), 
-            'Halaman utama aplikasi HeartBite'),
+        PageItem(
+          'Home Page',
+          const HomePage(),
+          'Halaman utama aplikasi HeartBite',
+        ),
       ],
       'Sidebar Pages': [
-        PageItem('About Page', const AboutScreen(),
-            'Informasi tentang aplikasi HeartBite'),
-        PageItem('Country Page', const CountryScreen(),
-            'Pengaturan lokasi dan bahasa'),
-        PageItem('Edit Profile Page', const EditProfileScreen(),
-            'Ubah informasi profil Anda'),
-        PageItem('Followers Page', const FollowersScreen(),
-            'Daftar pengikut Anda'),
-        PageItem('Following Page', const FollowingScreen(),
-            'Daftar yang Anda ikuti'),
-        PageItem('Notification Preferences Page',
-            const NotificationPreferencesScreen(),
-            'Atur preferensi notifikasi'),
-        PageItem('Profile Page', const ProfileScreen(),
-            'Tampilan profil pengguna'),
-        PageItem('Setting Page', const SettingsScreen(),
-            'Pengaturan umum aplikasi'),
+        PageItem(
+          'About Page',
+          const AboutScreen(),
+          'Informasi tentang aplikasi HeartBite',
+        ),
+        PageItem(
+          'Country Page',
+          const CountryScreen(),
+          'Pengaturan lokasi dan bahasa',
+        ),
+        PageItem(
+          'Edit Profile Page',
+          const EditProfileScreen(),
+          'Ubah informasi profil Anda',
+        ),
+        PageItem(
+          'Followers Page',
+          const FollowersScreen(),
+          'Daftar pengikut Anda',
+        ),
+        PageItem(
+          'Following Page',
+          const FollowingScreen(),
+          'Daftar yang Anda ikuti',
+        ),
+        PageItem(
+          'Notification Preferences Page',
+          const NotificationPreferencesScreen(),
+          'Atur preferensi notifikasi',
+        ),
+        PageItem(
+          'Profile Page',
+          const ProfileScreen(),
+          'Tampilan profil pengguna',
+        ),
+        PageItem(
+          'Setting Page',
+          const SettingsScreen(),
+          'Pengaturan umum aplikasi',
+        ),
       ],
       'Recipe Detail Pages': [
         PageItem(
-            'Recipe Detail',
-            RecipeDetailScreen(recipe: getSampleRecipe()),
-            'Halaman detail resep lengkap'),
+          'Recipe Detail',
+          RecipeDetailScreen(recipe: getSampleRecipe()),
+          'Halaman detail resep lengkap',
+        ),
         PageItem(
-            'Recipe Ingredients',
-            IngredientsScreen(recipe: getSampleRecipe()),
-            'Daftar bahan-bahan resep'),
+          'Recipe Ingredients',
+          IngredientsScreen(recipe: getSampleRecipe()),
+          'Daftar bahan-bahan resep',
+        ),
         PageItem(
-            'Recipe Directions',
-            DirectionsScreen(recipe: getSampleRecipe()),
-            'Langkah-langkah memasak'),
+          'Recipe Directions',
+          DirectionsScreen(recipe: getSampleRecipe()),
+          'Langkah-langkah memasak',
+        ),
         PageItem(
-            'Recipe Gallery',
-            GalleryScreen(
-                images: getSampleRecipe().galleryImages, initialIndex: 0),
-            'Galeri foto resep'),
+          'Recipe Gallery',
+          GalleryScreen(
+            images: getSampleRecipe().galleryImages,
+            initialIndex: 0,
+          ),
+          'Galeri foto resep',
+        ),
         PageItem(
-            'Recipe Discussion',
-            DiscussionScreen(
-              comments: getSampleRecipe().comments,
-              onCommentsUpdated: (updatedComments) {
-                print('Comments updated: ${updatedComments.length} comments');
-              },
-            ),
-            'Diskusi dan komentar resep'),
+          'Recipe Discussion',
+          DiscussionScreen(
+            comments: getSampleRecipe().comments,
+            onCommentsUpdated: (updatedComments) {
+              print('Comments updated: ${updatedComments.length} comments');
+            },
+          ),
+          'Diskusi dan komentar resep',
+        ),
       ],
     };
 
@@ -273,13 +441,17 @@ class NavigationPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => page.page),
+                              MaterialPageRoute(
+                                builder: (context) => page.page,
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 60),
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
                             alignment: Alignment.centerLeft,
                           ),
                           child: Column(
