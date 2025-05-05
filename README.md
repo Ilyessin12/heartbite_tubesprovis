@@ -71,20 +71,27 @@ lib/ <br/>
 
 # 📱 Screenshot Layar
 #### Halaman Pembuka
+![Screenshot_20250505-180555](https://github.com/user-attachments/assets/218723d6-b890-4195-9957-fdd8ceac099b)
+![Screenshot_20250505-180601](https://github.com/user-attachments/assets/810cfa95-91c7-4a89-90e3-ef2a198c9a03)
+![Screenshot_20250505-180607](https://github.com/user-attachments/assets/f5e23c57-6fc1-47af-af2f-9d6b633b3082)
+![Screenshot_20250505-180611](https://github.com/user-attachments/assets/69b8a076-03e8-46bb-823c-8f49941586f5)
 
 #### Halaman Autentikasi
+![Screenshot_20250505-180617](https://github.com/user-attachments/assets/614c655b-4eac-4307-81a3-44286003e3e0)
 
 #### Halaman Login & Register
+![Screenshot_20250505-180623](https://github.com/user-attachments/assets/5209be18-33e8-4dbc-81da-f3182bd4d38f)
+![Screenshot_20250505-180627](https://github.com/user-attachments/assets/0eb1dcb4-6af5-46a9-8e3a-4d2e328de51f)
 
 #### Halaman Lupa & Reset Password
-
-![Screenshot_20250505-180636](https://github.com/user-attachments/assets/9e488f51-178e-4583-ae28-a9fa0e1d1176)
+![Screenshot_20250505-180632](https://github.com/user-attachments/assets/c9c28ed7-d5f3-4e72-8830-376918e4a633)
+![Screenshot_20250505-180636](https://github.com/user-attachments/assets/8d37a763-eb6d-4cb7-be02-80d950bf87a5)
 
 #### Halaman OTP
-![Screenshot_20250505-180646](https://github.com/user-attachments/assets/86315311-fb55-4d81-9190-f6f78911458f)
+![Screenshot_20250505-180655](https://github.com/user-attachments/assets/574d3c0e-1b2b-4036-a805-d82be2aa226f)
 
 #### Halaman Verifikasi
-![Screenshot_20250505-180655](https://github.com/user-attachments/assets/a9308938-628c-4c4b-ac24-047ff4d720c1)
+![Screenshot_20250505-180646](https://github.com/user-attachments/assets/3797bffb-215c-4acd-902f-be3421b8daf3)
 
 #### Halaman Setup
 ![Screenshot_20250505-180701](https://github.com/user-attachments/assets/1d5e5494-8464-4b68-8992-a8857e6333f1)
