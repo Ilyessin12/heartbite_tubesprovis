@@ -47,7 +47,7 @@ dependencies:
 ### Instalasi
 1. Klon repositori
    ```
-   git clone [url-repositori]
+   git clone https://github.com/Ilyessin12/heartbite_tubesprovis.git
    ```
 3. Instal dependensi
    ```
