@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
           child: SingleChildScrollView(
             // memungkinkan scroll
             child: ConstrainedBox(
@@ -36,7 +37,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Ink(
+                        // Smaller back button
+                        Container(
+                          height: 36, // Reduced from default 48
+                          width: 36, // Reduced from default 48
                           decoration: const ShapeDecoration(
                             color: Color(0xFF8E1616),
                             shape: CircleBorder(),
@@ -45,7 +49,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             icon: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
+                              size: 18, // Reduced from default 24
                             ),
+                            padding: EdgeInsets.zero, // Remove padding
+                            constraints: BoxConstraints(), // Remove constraints
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -60,7 +67,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             );
                           },
-                          child: Text('Masuk', style: TextStyle(fontSize: 16)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              'Masuk', 
+                              style: GoogleFonts.dmSans(fontSize: 16),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -72,7 +85,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Text(
                         'Daftar',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -86,8 +102,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             // Teks deskripsi rata kiri
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               decoration: InputDecoration(
                                 hintText: 'Email',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -116,6 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButtonFormField<String>(
                                         value: '+62',
+                                        style: GoogleFonts.dmSans(),
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                             horizontal: 16,
@@ -128,7 +147,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 .map(
                                                   (code) => DropdownMenuItem(
                                                     value: code,
-                                                    child: Text(code),
+                                                    child: Text(
+                                                      code,
+                                                      style: GoogleFonts.dmSans(),
+                                                    ),
                                                   ),
                                                 )
                                                 .toList(),
@@ -149,9 +171,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   // Nomor Telepon
                                   Expanded(
                                     child: TextField(
+                                      style: GoogleFonts.dmSans(),
                                       keyboardType: TextInputType.phone,
                                       decoration: InputDecoration(
                                         hintText: 'Nomor Telepon',
+                                        hintStyle: GoogleFonts.dmSans(),
                                         contentPadding: EdgeInsets.symmetric(
                                           horizontal: 16,
                                           vertical: 18,
@@ -165,8 +189,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               decoration: InputDecoration(
                                 hintText: 'Nama Lengkap',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -181,8 +207,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               decoration: InputDecoration(
                                 hintText: 'Username',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -197,10 +225,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               obscureText:
                                   !_isPasswordVisible, // Menyembunyikan atau menampilkan password
                               decoration: InputDecoration(
                                 hintText: 'Kata Sandi',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -227,10 +257,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               obscureText:
                                   !_isPasswordVisible, // Menyembunyikan atau menampilkan password
                               decoration: InputDecoration(
                                 hintText: 'Konfirmasi Kata Sandi',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -273,6 +305,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Text(
                               'Dengan mendaftar Anda menyetujui Syarat dan Ketentuan kami',
                               textAlign: TextAlign.center,
+                              style: GoogleFonts.dmSans(fontSize: 12),
                             ),
                           ),
                         ),
@@ -291,7 +324,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text('Daftar'),
+                            child: Text(
+                              'Daftar',
+                              style: GoogleFonts.dmSans(),
+                            ),
                           ),
                         ),
                       ],

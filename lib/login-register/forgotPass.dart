@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'verifMethod.dart';
 
 class ForgotPassPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
             left: MediaQuery.of(context).size.width * -0.75,
             child: Image.asset(
               'assets/images/login/spiral.png',
-              width: MediaQuery.of(context).size.width * 1.5// sesuaikan ukuran jika perlu
+              width: MediaQuery.of(context).size.width * 1.5 // sesuaikan ukuran jika perlu
             ),
           ),
           SafeArea(
@@ -68,7 +69,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                           child: Text(
                             'Lupa',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 32),
+                            style: GoogleFonts.dmSans(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         Align(
@@ -76,7 +80,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                           child: Text(
                             'Kata Sandi',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 32),
+                            style: GoogleFonts.dmSans(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -87,6 +94,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                           child: Text(
                             'Silakan masukkan alamat email atau nomor telepon Anda untuk mencari akun Anda.',
                             textAlign: TextAlign.left,
+                            style: GoogleFonts.dmSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -99,8 +110,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                               children: [
                                 // Teks deskripsi rata kiri
                                 TextField(
+                                  style: GoogleFonts.dmSans(),
                                   decoration: InputDecoration(
                                     hintText: 'Email/Nomor Telepon',
+                                    hintStyle: GoogleFonts.dmSans(),
                                     filled: true,
                                     fillColor: Color.fromARGB(13, 0, 0, 0),
                                     border: OutlineInputBorder(
@@ -141,7 +154,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                child: Text('Lanjutkan'),
+                                child: Text(
+                                  'Lanjutkan',
+                                  style: GoogleFonts.dmSans(),
+                                ),
                               ),
                             ),
                           ],

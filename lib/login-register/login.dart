@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'forgotPass.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,7 +19,8 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+          // Increased horizontal padding to move elements away from edges
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
           child: SingleChildScrollView(
             // memungkinkan scroll
             child: ConstrainedBox(
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                 minHeight:
                     MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top -
-                    16, // untuk menyamakan dengan padding vertikal total
+                    24, // adjusted for increased vertical padding
               ),
               child: IntrinsicHeight(
                 // agar Column bisa mengatur tinggi anak-anaknya
@@ -37,7 +39,10 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Ink(
+                        // Smaller back button
+                        Container(
+                          height: 36, // Reduced from default 48
+                          width: 36, // Reduced from default 48
                           decoration: const ShapeDecoration(
                             color: Color(0xFF8E1616),
                             shape: CircleBorder(),
@@ -46,7 +51,10 @@ class _LoginPageState extends State<LoginPage> {
                             icon: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
+                              size: 18, // Reduced from default 24
                             ),
+                            padding: EdgeInsets.zero, // Remove padding
+                            constraints: BoxConstraints(), // Remove constraints
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -61,7 +69,13 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          child: Text('Daftar', style: TextStyle(fontSize: 16)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              'Daftar', 
+                              style: GoogleFonts.dmSans(fontSize: 16),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -73,7 +87,10 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Masuk',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -84,8 +101,10 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             // Teks deskripsi rata kiri
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               decoration: InputDecoration(
                                 hintText: 'Email',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -100,10 +119,12 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               obscureText:
                                   !_isPasswordVisible, // Menyembunyikan atau menampilkan password
                               decoration: InputDecoration(
                                 hintText: 'Kata Sandi',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -145,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Text(
                                     'Lupa kata sandi?',
                                     textAlign: TextAlign.right,
+                                    style: GoogleFonts.dmSans(),
                                   ),
                                 ),
                               ),
@@ -168,7 +190,8 @@ class _LoginPageState extends State<LoginPage> {
                                 child: ElevatedButton(
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF8E1616),
+                                    // Changed to 20% opacity
+                                    backgroundColor: Color(0xFF8E1616).withOpacity(0.2),
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -193,7 +216,8 @@ class _LoginPageState extends State<LoginPage> {
                                 child: ElevatedButton(
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF8E1616),
+                                    // Changed to 20% opacity
+                                    backgroundColor: Color(0xFF8E1616).withOpacity(0.2),
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -225,7 +249,10 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text('Masuk'),
+                            child: Text(
+                              'Masuk',
+                              style: GoogleFonts.dmSans(),
+                            ),
                           ),
                         ),
                       ],

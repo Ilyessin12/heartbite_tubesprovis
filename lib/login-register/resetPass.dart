@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ResetPassPage extends StatefulWidget {
   const ResetPassPage({super.key});
@@ -16,7 +17,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
           child: SingleChildScrollView(
             // memungkinkan scroll
             child: ConstrainedBox(
@@ -35,7 +36,10 @@ class _ResetPassPageState extends State<ResetPassPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Ink(
+                        // Smaller back button
+                        Container(
+                          height: 36, // Reduced from default 48
+                          width: 36, // Reduced from default 48
                           decoration: const ShapeDecoration(
                             color: Color(0xFF8E1616),
                             shape: CircleBorder(),
@@ -44,7 +48,10 @@ class _ResetPassPageState extends State<ResetPassPage> {
                             icon: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
+                              size: 18, // Reduced from default 24
                             ),
+                            padding: EdgeInsets.zero, // Remove padding
+                            constraints: BoxConstraints(), // Remove constraints
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -60,7 +67,10 @@ class _ResetPassPageState extends State<ResetPassPage> {
                       child: Text(
                         'Atur Ulang',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     Align(
@@ -68,7 +78,10 @@ class _ResetPassPageState extends State<ResetPassPage> {
                       child: Text(
                         'Kata Sandi',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 32),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -79,10 +92,12 @@ class _ResetPassPageState extends State<ResetPassPage> {
                           children: [
                             // Teks deskripsi rata kiri
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               obscureText:
                                   !_isPasswordVisible, // Menyembunyikan atau menampilkan password
                               decoration: InputDecoration(
                                 hintText: 'Kata Sandi',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -109,10 +124,12 @@ class _ResetPassPageState extends State<ResetPassPage> {
                             ),
                             SizedBox(height: 12),
                             TextField(
+                              style: GoogleFonts.dmSans(),
                               obscureText:
                                   !_isPasswordVisible, // Menyembunyikan atau menampilkan password
                               decoration: InputDecoration(
                                 hintText: 'Konfirmasi Kata Sandi',
+                                hintStyle: GoogleFonts.dmSans(),
                                 filled: true,
                                 fillColor: Color.fromARGB(13, 0, 0, 0),
                                 border: OutlineInputBorder(
@@ -157,7 +174,10 @@ class _ResetPassPageState extends State<ResetPassPage> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text('Selesai'),
+                            child: Text(
+                              'Selesai',
+                              style: GoogleFonts.dmSans(),
+                            ),
                           ),
                         ),
                       ],
