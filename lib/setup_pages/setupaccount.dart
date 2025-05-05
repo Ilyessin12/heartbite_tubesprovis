@@ -96,7 +96,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: Text(
-                            'Skip',
+                            'Lewati',
                             style: GoogleFonts.dmSans(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -110,7 +110,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
 
                     // Heading
                     Text(
-                      'Set Up Your\nAccount',
+                      'Atur akun\nAnda',
                       style: GoogleFonts.dmSans(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Header Image',
+                          'Foto Sampul',
                           style: GoogleFonts.dmSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -153,14 +153,14 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Upload header image',
+                                  'Unggah Foto Sampul',
                                   style: GoogleFonts.dmSans(
                                     fontSize: 14,
                                     color: Colors.grey[700],
                                   ),
                                 ),
                                 Text(
-                                  'Recommended: 1200 x 400',
+                                  'Rekomendasi Ukuran: 1200 x 400',
                                   style: GoogleFonts.dmSans(
                                     fontSize: 12,
                                     color: Colors.grey,
@@ -180,7 +180,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Profile Picture',
+                          'Foto Profil',
                           style: GoogleFonts.dmSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -209,7 +209,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    'Add photo',
+                                    'Unggah Foto',
                                     style: GoogleFonts.dmSans(
                                       fontSize: 14,
                                       color: Colors.grey[700],
@@ -278,7 +278,7 @@ class _SetupAccountPageState extends State<SetupAccountPage> {
                             elevation: 0,
                           ),
                           child: Text(
-                            'Continue',
+                            'Lanjut',
                             style: GoogleFonts.dmSans(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,

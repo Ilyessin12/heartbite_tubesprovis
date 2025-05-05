@@ -58,7 +58,7 @@ class Welcome1Screen extends StatelessWidget {
 
                       // Main heading
                       Text(
-                        'Share Your\nRecipes',
+                        'Cari Resep Sesuai\nGaya Masakmu',
                         style: GoogleFonts.dmSans(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class Welcome1Screen extends StatelessWidget {
 
                       // Subheading text
                       Text(
-                        'Create and share your favorite recipes\nand discover new ones from our community.',
+                        'Temukan resep yang cocok dengan\nalat masak yang kamu punya, preferensi diet, dan kebutuhan alergi.',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.9),

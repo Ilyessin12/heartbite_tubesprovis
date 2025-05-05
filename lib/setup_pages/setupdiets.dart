@@ -100,7 +100,7 @@ class _SetupDietsPageState extends State<SetupDietsPage> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
-                          'Skip',
+                          'Lewati',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -114,7 +114,7 @@ class _SetupDietsPageState extends State<SetupDietsPage> {
 
                   // Heading
                   Text(
-                    'Do You Follow\nAny of These Diets?',
+                    'Ada pola makan\ntertentu yang kamu ikuti?',
                     style: GoogleFonts.dmSans(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -190,7 +190,7 @@ class _SetupDietsPageState extends State<SetupDietsPage> {
                           elevation: 0,
                         ),
                         child: Text(
-                          'Continue',
+                          'Lanjut',
                           style: GoogleFonts.dmSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

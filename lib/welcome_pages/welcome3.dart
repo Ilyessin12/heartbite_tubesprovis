@@ -58,7 +58,7 @@ class Welcome3Screen extends StatelessWidget {
 
                       // Main heading
                       Text(
-                        'Become a\nMaster Chef',
+                        'Dari Dapur\nke Dunia',
                         style: GoogleFonts.dmSans(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class Welcome3Screen extends StatelessWidget {
 
                       // Subheading text
                       Text(
-                        'Create and share your favorite recipes\nand discover new ones from our community.',
+                        'Tunjukkan kreasi masakanmu dan lihat apa yang sedang dimasak oleh pengguna lain di seluruh Indonesia.',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.9),

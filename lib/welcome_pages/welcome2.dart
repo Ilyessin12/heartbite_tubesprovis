@@ -58,7 +58,7 @@ class Welcome2Screen extends StatelessWidget {
 
                       // Main heading
                       Text(
-                        'Learn To\nCook',
+                        'Bagikan Resep\nAndalanmu',
                         style: GoogleFonts.dmSans(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class Welcome2Screen extends StatelessWidget {
 
                       // Subheading text
                       Text(
-                        'Create and share your favorite recipes\nand discover new ones from our community.',
+                        'Temukan inspirasi baru dan bagikan resep favoritmu dengan komunitas pecinta masak lainnya.',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.9),

@@ -12,12 +12,13 @@ class _SetupAllergiesPageState extends State<SetupAllergiesPage> {
   final Color primaryRed = const Color(0xFF8E1616);
 
   // Track selected allergies
-  final Set<String> selectedAllergies = {'Fish'}; // Fish is pre-selected as shown in the image
+  final Set<String> selectedAllergies = {'Ikan'}; // Ikan is pre-selected as shown in the image
 
   final List<String> allergies = [
-    'Gluten', 'Dairy', 'Egg',
-    'Soy', 'Peanut', 'Wheat',
-    'Milk', 'Fish'
+    'Gluten', 'Produk Susu', 'Telur',
+'Kedelai', 'Kacang Tanah', 'Gandum',
+'Susu', 'Ikan'
+
   ];
 
   @override
@@ -96,7 +97,7 @@ class _SetupAllergiesPageState extends State<SetupAllergiesPage> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
-                          'Skip',
+                          'Lewati',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -110,7 +111,7 @@ class _SetupAllergiesPageState extends State<SetupAllergiesPage> {
 
                   // Heading
                   Text(
-                    'Any\nAllergies?',
+                    'Ada alergi yang perlu kami ketahui?',
                     style: GoogleFonts.dmSans(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -185,7 +186,7 @@ class _SetupAllergiesPageState extends State<SetupAllergiesPage> {
                           elevation: 0,
                         ),
                         child: Text(
-                          'Continue',
+                          'Lanjut',
                           style: GoogleFonts.dmSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

@@ -58,7 +58,7 @@ class FinishSetupScreen extends StatelessWidget {
 
                       // Main heading
                       Text(
-                        'Learn To\nCook',
+                        'Pengaturan Akun\nSelesai',
                         style: GoogleFonts.dmSans(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class FinishSetupScreen extends StatelessWidget {
 
                       // Subheading text
                       Text(
-                        'Create and share your favorite pes\nand discover new ones from our community.',
+                        'Ayo mulai temukan resep terbaik dan sesuaikan dengan preferensimu!',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.9),
@@ -102,7 +102,7 @@ class FinishSetupScreen extends StatelessWidget {
                           elevation: 0,
                         ),
                         child: Text(
-                          'Continue',
+                          'Lanjut',
                           style: GoogleFonts.dmSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
