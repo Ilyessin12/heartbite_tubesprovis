@@ -43,6 +43,15 @@ import 'sidebar/screens/notification_preferences_screen.dart';
 import 'sidebar/screens/profile_screen.dart';
 import 'sidebar/screens/settings_screen.dart';
 
+//==== import detail resep pages
+import 'recipe_detail/recipe_detail.dart';
+import 'recipe_detail/screens/recipe_detail_screen.dart';
+import 'recipe_detail/screens/ingredients_screen.dart';
+import 'recipe_detail/screens/directions_screen.dart';
+import 'recipe_detail/screens/gallery_screen.dart';
+import 'recipe_detail/screens/discussion_screen.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -121,6 +130,27 @@ class NavigationPage extends StatelessWidget {
       PageItem('Notification Preferences Page', const NotificationPreferencesScreen()),
       PageItem('Profile Page', const ProfileScreen()),
       PageItem('Setting Page', const SettingsScreen()),
+
+      // detail resep pages
+      PageItem('Recipe Detail', RecipeDetailScreen(
+        recipe: getSampleRecipe(),
+      )),
+      PageItem('Recipe Ingredients', IngredientsScreen(
+      recipe: getSampleRecipe(),
+      )),
+      PageItem('Recipe Directions', DirectionsScreen(
+        recipe: getSampleRecipe(),
+      )),
+      PageItem('Recipe Gallery', GalleryScreen(
+      images: getSampleRecipe().galleryImages,
+      initialIndex: 0,
+    )),
+    PageItem('Recipe Discussion', DiscussionScreen(
+      comments: getSampleRecipe().comments,
+      onCommentsUpdated: (updatedComments) {
+        print('Comments updated: ${updatedComments.length} comments');
+      },
+    )),
 
 
       //++++++++++++++++++++ CONTOH PEMAKAIAN ++++++++++++++++++++++
