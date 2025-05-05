@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:solar_icons/solar_icons.dart'; // Pastikan package ini sudah diimpor
+import '../bottomnavbar/bottom-navbar.dart'; // Sesuaikan path import sesuai struktur project Anda
 
-class EmptyNotificationPage extends StatelessWidget {
+class EmptyNotificationPage extends StatefulWidget {
   const EmptyNotificationPage({Key? key}) : super(key: key);
+
+  @override
+  State<EmptyNotificationPage> createState() => _EmptyNotificationPageState();
+}
+
+class _EmptyNotificationPageState extends State<EmptyNotificationPage> {
+  int _currentIndex = 0; // Default index, bisa disesuaikan
+
+  void _onNavItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    
+    // Navigasi ke halaman lain berdasarkan index yang dipilih
+    // Ini hanya contoh, Anda perlu menyesuaikan dengan navigasi aplikasi Anda
+    // if (index == 0) {
+    //   // Navigasi ke Home
+    // } else if (index == 1) {
+    //   // Navigasi ke Bookmark
+    // }
+  }
+
+  void _onFabPressed() {
+    // Implementasi aksi ketika FAB ditekan
+    // Misalnya membuka halaman tambah resep baru
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +109,11 @@ class EmptyNotificationPage extends StatelessWidget {
             const Spacer(flex: 2),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onNavItemTapped,
+        onFabPressed: _onFabPressed,
       ),
     );
   }

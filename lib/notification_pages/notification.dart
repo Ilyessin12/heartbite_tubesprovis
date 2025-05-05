@@ -1,82 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// Sesuaikan path import sesuai dengan struktur folder Anda
+import '../bottomnavbar/bottom-navbar.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  int _selectedIndex = 3; // Karena ini halaman notifikasi, index 3 dipilih
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    
+    // Navigasi ke halaman lain berdasarkan index yang dipilih
+    // Ini hanya contoh, Anda perlu menyesuaikan dengan navigasi aplikasi Anda
+    if (index != 3) { // Jika bukan halaman notifikasi
+      // Contoh navigasi ke halaman lain
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => halamanTujuan),
+      // );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final Color primaryRed = const Color(0xFF8E1616);
     
-    // Sample notification data
-    final List<Map<String, dynamic>> recentNotifications = [
+    // Data notifikasi terbaru
+    final List<Map<String, dynamic>> notifikasiTerbaru = [
       {
-        'name': 'Fernandez',
-        'action': 'loved your recipes',
-        'time': '23 mins ago',
-        'hasImage': true,
-        'hasMultipleImages': false,
-        'hasFollowButton': false,
+        'nama': 'Fernandez',
+        'aksi': 'menyukai resep Anda',
+        'waktu': '23 menit yang lalu',
+        'adaGambar': true,
+        'gambarProfil': 'assets/images/avatars/avatar1.jpg',
+        'gambarKonten': 'assets/images/cookbooks/cake.jpg',
+        'adaBanyakGambar': false,
+        'adaTombolIkuti': false,
       },
       {
-        'name': 'Amanda',
-        'action': 'has follow you back',
-        'time': '2 hours ago',
-        'hasImage': false,
-        'hasMultipleImages': false,
-        'hasFollowButton': false,
+        'nama': 'Amanda',
+        'aksi': 'telah mengikuti Anda kembali',
+        'waktu': '2 jam yang lalu',
+        'adaGambar': false,
+        'gambarProfil': 'assets/images/avatars/avatar2.jpg',
+        'adaBanyakGambar': false,
+        'adaTombolIkuti': false,
       },
       {
-        'name': 'Michale',
-        'action': 'review your recipe:',
-        'subtext': 'I\'ve tried it and it\'s delicious!',
-        'time': '4 hours ago',
-        'hasImage': true,
-        'hasMultipleImages': false,
-        'hasFollowButton': false,
+        'nama': 'Michael',
+        'aksi': 'Mengomentari resep Anda:',
+        'subteks': 'Saya sudah mencobanya dan rasanya lezat!',
+        'waktu': '4 jam yang lalu',
+        'adaGambar': true,
+        'gambarProfil': 'assets/images/avatars/avatar3.jpg',
+        'gambarKonten': 'assets/images/cookbooks/chicken.jpg',
+        'adaBanyakGambar': false,
+        'adaTombolIkuti': false,
       },
     ];
     
-    final List<Map<String, dynamic>> olderNotifications = [
+    // Data notifikasi lama
+    final List<Map<String, dynamic>> notifikasiLama = [
       {
-        'name': 'Patricia',
-        'action': 'has posted her new recipe',
-        'time': '1 day ago',
-        'hasImage': true,
-        'hasMultipleImages': false,
-        'hasFollowButton': false,
-      },
-      {
-        'name': 'Fernandez',
-        'action': 'has updated his recipe\'s gallery',
-        'time': '1 day ago',
-        'hasImage': false,
-        'hasMultipleImages': true,
-        'hasFollowButton': false,
-      },
-      {
-        'name': 'Charles Walker',
-        'action': 'is now following you',
-        'time': '2 days ago',
-        'hasImage': false,
-        'hasMultipleImages': false,
-        'hasFollowButton': true,
-      },
-      {
-        'name': 'Antonio',
-        'action': 'loved your recipes',
-        'time': '23 mins ago',
-        'hasImage': true,
-        'hasMultipleImages': false,
-        'hasFollowButton': false,
-      },
-      {
-        'name': 'Fernandez',
-        'action': 'has updated his recipe\'s gallery',
-        'time': '1 day ago',
-        'hasImage': false,
-        'hasMultipleImages': true,
-        'hasFollowButton': false,
+        'nama': 'Patricia',
+        'aksi': 'telah memposting resep barunya',
+        'waktu': '1 hari yang lalu',
+        'adaGambar': true,
+        'gambarProfil': 'assets/images/avatars/avatar4.jpg',
+        'gambarKonten': 'assets/images/recipes/sandwich1.jpg',
+        'adaBanyakGambar': false,
+        'adaTombolIkuti': false,
       },
     ];
     
@@ -86,12 +87,12 @@ class NotificationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // App bar with back button and title
+            // App bar dengan tombol kembali dan judul
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
               child: Row(
                 children: [
-                  // Back button in red circle
+                  // Tombol kembali dalam lingkaran merah
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -114,7 +115,7 @@ class NotificationPage extends StatelessWidget {
                   
                   const SizedBox(width: 24),
                   
-                  // Title
+                  // Judul
                   Text(
                     'Notifikasi',
                     style: GoogleFonts.dmSans(
@@ -126,15 +127,15 @@ class NotificationPage extends StatelessWidget {
               ),
             ),
             
-            // Notification list
+            // Daftar notifikasi
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 children: [
-                  // Recent section
+                  // Bagian terbaru
                   const SizedBox(height: 24),
                   Text(
-                    'Recent',
+                    'Terbaru',
                     style: GoogleFonts.dmSans(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -142,15 +143,15 @@ class NotificationPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   
-                  // Recent notifications
-                  ...recentNotifications.map((notification) => 
-                    _buildNotificationItem(notification)
+                  // Notifikasi terbaru
+                  ...notifikasiTerbaru.map((notifikasi) => 
+                    _buildNotificationItem(notifikasi)
                   ).toList(),
                   
-                  // Older notifications section
+                  // Bagian notifikasi lama
                   const SizedBox(height: 32),
                   Text(
-                    'Older Notifications',
+                    'Notifikasi Lama',
                     style: GoogleFonts.dmSans(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -158,12 +159,12 @@ class NotificationPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   
-                  // Older notifications
-                  ...olderNotifications.map((notification) => 
-                    _buildNotificationItem(notification)
+                  // Notifikasi lama
+                  ...notifikasiLama.map((notifikasi) => 
+                    _buildNotificationItem(notifikasi)
                   ).toList(),
                   
-                  // Bottom padding
+                  // Padding bawah
                   const SizedBox(height: 24),
                 ],
               ),
@@ -171,30 +172,34 @@ class NotificationPage extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _selectedIndex, // Ubah dari selectedIndex menjadi currentIndex
+        onTap: _onItemTapped, // Ubah dari onItemTapped menjadi onTap
+      ),
     );
   }
   
-  Widget _buildNotificationItem(Map<String, dynamic> notification) {
+  Widget _buildNotificationItem(Map<String, dynamic> notifikasi) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Profile picture
+          // Foto profil
           CircleAvatar(
             radius: 24,
             backgroundColor: Colors.grey[200],
-            backgroundImage: const AssetImage('assets/images/avatars/avatar1.jpg'),
+            backgroundImage: AssetImage(notifikasi['gambarProfil']),
           ),
           
           const SizedBox(width: 12),
           
-          // Notification content
+          // Konten notifikasi
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Name and action
+                // Nama dan aksi
                 RichText(
                   text: TextSpan(
                     style: GoogleFonts.dmSans(
@@ -203,22 +208,22 @@ class NotificationPage extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: notification['name'],
+                        text: notifikasi['nama'],
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       TextSpan(
-                        text: ' ${notification['action']}',
+                        text: ' ${notifikasi['aksi']}',
                       ),
                     ],
                   ),
                 ),
                 
-                // Subtext if available
-                if (notification.containsKey('subtext'))
+                // Subteks jika tersedia
+                if (notifikasi.containsKey('subteks'))
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
-                      notification['subtext'],
+                      notifikasi['subteks'],
                       style: GoogleFonts.dmSans(
                         fontSize: 14,
                         color: Colors.black87,
@@ -226,8 +231,8 @@ class NotificationPage extends StatelessWidget {
                     ),
                   ),
                 
-                // Multiple images for gallery updates
-                if (notification['hasMultipleImages'])
+                // Beberapa gambar untuk pembaruan galeri
+                if (notifikasi['adaBanyakGambar'])
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Row(
@@ -237,7 +242,7 @@ class NotificationPage extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.asset(
-                              'assets/images/cookbooks/cake.jpg',
+                              notifikasi['gambarGaleri'][index],
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
@@ -248,11 +253,11 @@ class NotificationPage extends StatelessWidget {
                     ),
                   ),
                 
-                // Time
+                // Waktu
                 Padding(
                   padding: const EdgeInsets.only(top: 4.0),
                   child: Text(
-                    notification['time'],
+                    notifikasi['waktu'],
                     style: GoogleFonts.dmSans(
                       fontSize: 12,
                       color: Colors.grey,
@@ -265,18 +270,18 @@ class NotificationPage extends StatelessWidget {
           
           const SizedBox(width: 12),
           
-          // Right side content (food image or follow button)
-          if (notification['hasImage'])
+          // Konten sisi kanan (gambar makanan atau tombol ikuti)
+          if (notifikasi['adaGambar'])
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                'assets/images/cookbooks/chicken.jpg',
+                notifikasi['gambarKonten'],
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,
               ),
             )
-          else if (notification['hasFollowButton'])
+          else if (notifikasi['adaTombolIkuti'])
             Container(
               height: 40,
               width: 40,

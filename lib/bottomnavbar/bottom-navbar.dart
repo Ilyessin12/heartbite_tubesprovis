@@ -23,29 +23,62 @@ class BottomNavBar extends StatelessWidget{
           decoration: const BoxDecoration(
             color: Color(0xFF8E1616),
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+              topLeft: Radius.circular(0),
+              topRight: Radius.circular(0),
             ),
           ),
           height: 70,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(0, SolarIconsOutline.homeAngle),
-              const SizedBox(width: 40), // Space for FAB
-              _buildNavItem(1, SolarIconsOutline.bookmark),
+              // Menggunakan Expanded dengan flex untuk mengatur posisi tombol
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildNavItem(0, SolarIconsOutline.homeAngle),
+                  ],
+                ),
+              ),
+              
+              // Ruang untuk FAB di tengah
+              const SizedBox(width: 40),
+              
+              // Tombol bookmark di sisi kanan
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildNavItem(1, SolarIconsOutline.bookmark),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-        // FAB positioned on top of navbar
+        // FAB positioned half outside the navbar
         Positioned(
-          top: 5, // Move up to overlap with the navbar
-          child: FloatingActionButton(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            shape: const CircleBorder(),
-            child: const Icon(Icons.add, color: Color(0xFF8E1616)),
-            onPressed: onFabPressed ?? (){},
+          top: -25, // Negative value to move it up (half the height of FAB)
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              shape: const CircleBorder(),
+              child: const Icon(Icons.add, color: Color(0xFF8E1616), size: 30),
+              onPressed: onFabPressed ?? (){},
+            ),
           ),
         ),
       ],
@@ -62,6 +95,7 @@ class BottomNavBar extends StatelessWidget{
           icon: Icon(
             icon,
             color: Colors.white,
+            size: 28, // Sedikit lebih besar untuk visibilitas yang lebih baik
           ),
           onPressed: () => onTap(index),
         ),

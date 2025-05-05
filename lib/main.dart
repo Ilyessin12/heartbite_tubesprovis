@@ -9,6 +9,7 @@ import 'setup_pages/setupaccount.dart';
 import 'setup_pages/finishsetup.dart';
 import 'notification_pages/empty_notification.dart';
 import 'notification_pages/notification.dart';
+// import 'bottomnavbar/bottom-navbar.dart';
 // Import other pages here
 // import 'pages/another.dart';
 
@@ -56,6 +57,7 @@ class NavigationPage extends StatelessWidget {
       PageItem('Finish Setup', const FinishSetupScreen()),
       PageItem('Empty Notification', const EmptyNotificationPage()),
       PageItem('Notification', const NotificationPage()),
+      // PageItem('Bottom navbar', const BottomNavBar()),
       // Tambah halaman lain di sini
       // PageItem('Another Page', const AnotherPage()),
     ];
