@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.network(
+              child: Image.asset(  // Change from Image.network to Image.asset
                 'assets/images/avatars/avatar3.jpg',
                 fit: BoxFit.cover,
               ),
