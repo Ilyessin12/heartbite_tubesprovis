@@ -6,8 +6,9 @@ import 'package:solar_icons/solar_icons.dart';
 import '../bottomnavbar/bottom-navbar.dart';
 import 'bookmark-detail.dart';
 
-// for routing to bookmark-create
+// for routing to bookmark-create and bookmark-edit
 import 'bookmark-create.dart';
+import 'bookmark-edit.dart'; // Import BookmarkEditScreen
 
 // Model for bookmark categories
 class BookmarkCategory{
@@ -93,14 +94,14 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
 
   // Track selected categories for deletion
   Set<int> selectedCategories = {};
-  
+
   void toggleCategorySelection(int index){
     // Don't allow selection of "Saved" category
     if(categories[index].name == 'Saved'){
       return;
     }
 
-    setState(() {
+    setState((){
       if(selectedCategories.contains(index)){
         selectedCategories.remove(index);
       }
@@ -111,16 +112,16 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
   }
 
   void deleteSelectedCategories(){
-    setState(() {
+    setState((){
       // Sort in reverse order to avoid index shifting issues
       final toDelete = selectedCategories.toList()..sort((a, b) => b.compareTo(a));
-      
+
       for(final index in toDelete){
         if(categories[index].name != 'Saved'){
           categories.removeAt(index);
         }
       }
-      
+
       // Clear selections after deletion
       selectedCategories.clear();
     });
@@ -129,6 +130,15 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
   void handleBottomNavTap(int index){
     // In a real app, you'd navigate to different screens
     print('Navigated to index: $index');
+  }
+
+  void _navigateToEdit(BookmarkCategory category){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookmarkEditScreen(category: category),
+      ),
+    );
   }
 
   @override
@@ -199,6 +209,8 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
           ),
           itemCount: categories.length,
           itemBuilder: (context, index){
+            final category = categories[index];
+            final isSavedCategory = category.name == 'Saved';
             return GestureDetector(
               onTap: (){
                 if(selectedCategories.isNotEmpty){
@@ -210,7 +222,7 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
                     context,
                     MaterialPageRoute(
                       builder: (context) => BookmarkDetailScreen(
-                        category: categories[index],
+                        category: category,
                       ),
                     ),
                   );
@@ -226,7 +238,7 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
                   children: [
                     // Category image
                     Image.asset(
-                      'assets/images/cookbooks/placeholder_image.jpg',
+                      'assets/images/cookbooks/placeholder_image.jpg', // Use category.imageUrl if available
                       fit: BoxFit.cover,
                     ),
                     // Gradient overlay
@@ -247,7 +259,7 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
                       left: 10,
                       bottom: 10,
                       child: Text(
-                        categories[index].name,
+                        category.name,
                         style: GoogleFonts.dmSans(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -263,13 +275,34 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
                         child: Container(
                           padding: const EdgeInsets.all(1),
                           decoration: BoxDecoration(
-                            color: Colors.grey,
+                            color: Colors.grey.withOpacity(0.5), // Semi-transparent background
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.check_circle,
                             size: 24,
                             color: Color(0xFFAFF4C6),
+                          ),
+                        ),
+                      ),
+                    // Edit Icon (only when not selecting and not 'Saved')
+                    if(selectedCategories.isEmpty && !isSavedCategory)
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: GestureDetector(
+                          onTap: () => _navigateToEdit(category),
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4), // Semi-transparent background
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              SolarIconsOutline.penNewSquare, // Or Icons.edit
+                              size: 20,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
