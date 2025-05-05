@@ -35,7 +35,7 @@ Aplikasi berbagi resep berbasis Flutter yang dikembangkan oleh Kelompok 23 untuk
 - Android Studio / VS Code
 - Android SDK & NDK
 ### Dependensi
-dependencies:
+dependencies: <br/>
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
