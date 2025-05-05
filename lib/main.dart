@@ -5,6 +5,17 @@ import 'welcome_pages/welcome.dart';
 import 'welcome_pages/welcome1.dart';
 import 'welcome_pages/welcome2.dart';
 import 'welcome_pages/welcome3.dart';
+
+//========= import login pages
+import 'login-register/auth.dart';
+import 'login-register/forgotPass.dart';
+import 'login-register/login.dart';
+import 'login-register/otp.dart';
+import 'login-register/register.dart';
+import 'login-register/resetPass.dart';
+import 'login-register/verifMethod.dart';
+
+
 //======== import setup pages
 import 'setup_pages/setupallergies.dart';
 import 'setup_pages/setupdiets.dart';
@@ -61,6 +72,16 @@ class NavigationPage extends StatelessWidget {
       PageItem('Welcome 1 Screen', const Welcome1Screen()),
       PageItem('Welcome 2 Screen', const Welcome2Screen()),
       PageItem('Welcome 3 Screen', const Welcome3Screen()),
+
+      //login pages
+      PageItem('authentication', const Auth()),
+      PageItem('Login', const LoginPage()),
+      PageItem('Register', const RegisterPage()),
+      PageItem('Forgot Password', const ForgotPassPage()),
+      PageItem('Reset Password', const ResetPassPage()),
+      PageItem('OTP', const OtpPage()),
+      PageItem('Verification Method', const VerifMethodPage()),
+
       //setup pages
       PageItem('Setup Allergies', const SetupAllergiesPage()),
       PageItem('Setup Diets', const SetupDietsPage()),
