@@ -6,10 +6,13 @@ import 'package:image_picker/image_picker.dart';
 
 // Import bottom navigation components
 import '../bottomnavbar/bottom-navbar.dart';
-import 'bookmark.dart' show BookmarkCategory, RecipeItem;
+import 'bookmark.dart' show BookmarkCategory, RecipeItem; // Keep RecipeItem import
 
 class BookmarkCreateScreen extends StatefulWidget{
-  const BookmarkCreateScreen({Key? key}) : super(key: key);
+  // Add parameter to accept saved recipes
+  final List<RecipeItem> savedRecipes;
+
+  const BookmarkCreateScreen({Key? key, required this.savedRecipes}) : super(key: key);
 
   @override
   State<BookmarkCreateScreen> createState() => _BookmarkCreateScreenState();
@@ -21,46 +24,19 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
   File? _selectedImage;
   List<RecipeItem> _selectedRecipes = [];
   bool _isSelectingCover = false;
+  // Start with recipe selection screen
   bool _isSelectingRecipes = true;
-  
+
   // Sample cover options
   final List<String> _coverOptions = [
     'assets/images/cookbooks/placeholder_image.jpg',
     'assets/images/cookbooks/placeholder_image.jpg',
     'assets/images/cookbooks/placeholder_image.jpg',
   ];
-  
-  // Sample recipes to choose from
-  final List<RecipeItem> _availableRecipes = [
-    RecipeItem(
-      name: 'Fruity blueberry toast',
-      imageUrl: 'placeholder_image.jpg',
-      rating: 4.5,
-      reviewCount: 128,
-      calories: 23,
-      prepTime: 2,
-      cookTime: 12,
-    ),
-    RecipeItem(
-      name: 'Fruity blackberry toast',
-      imageUrl: 'placeholder_image.jpg',
-      rating: 4.5,
-      reviewCount: 128,
-      calories: 24,
-      prepTime: 2,
-      cookTime: 12,
-    ),
-    RecipeItem(
-      name: 'Blueberry pancakes',
-      imageUrl: 'placeholder_image.jpg',
-      rating: 4.8,
-      reviewCount: 106,
-      calories: 29,
-      prepTime: 2,
-      cookTime: 25,
-    ),
-  ];
-  
+
+  // REMOVE the hardcoded _availableRecipes list
+  // final List<RecipeItem> _availableRecipes = [ ... ];
+
   @override
   void dispose(){
     _titleController.dispose();
@@ -70,6 +46,18 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
   void handleBottomNavTap(int index){
     // In a real app, you'd navigate to different screens
     print('Navigated to index: $index');
+     // Example: Navigate to Home if index 0 is tapped
+    if(index == 0){
+       if(Navigator.canPop(context)){
+         Navigator.popUntil(context, (route) => route.isFirst);
+       }
+    }
+    else if(index == 1){ // Bookmark index
+        // If already on a create/edit screen within bookmark, pop back to main bookmark screen
+        if(Navigator.canPop(context)){
+            Navigator.popUntil(context, ModalRoute.withName('/bookmark')); // Assuming '/bookmark' is your main bookmark route name
+        }
+    }
   }
 
   void createBookmark(){
@@ -80,41 +68,62 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
       );
       return;
     }
-    
+    if(_selectedRecipes.isEmpty){
+       ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select at least one recipe')),
+      );
+      return;
+    }
+
     // Create new bookmark category
     final newCategory = BookmarkCategory(
       name: _titleController.text.trim(),
-      imageUrl: 'placeholder_image.jpg', // In a real app, you'd save the image
-      recipes: _selectedRecipes,
+      imageUrl: _selectedImage?.path ?? 'assets/images/cookbooks/placeholder_image.jpg', // Use selected image path or default
+      recipes: List.from(_selectedRecipes), // Use a copy
     );
-    
-    // In a real app, you would save this to your database or state manager
-    print('Created bookmark: ${newCategory.name} with ${_selectedRecipes.length} recipes');
-    
-    // Navigate back to previous screen
-    Navigator.pop(context);
+
+    // In a real app, you would pass this newCategory back to BookmarkScreen
+    // using Navigator.pop(context, newCategory) and handle it in the .then()
+    print('Created bookmark: ${newCategory.name} with ${newCategory.recipes.length} recipes');
+    print('Image URL: ${newCategory.imageUrl}');
+
+    // Navigate back to the main bookmark screen
+    // Pop twice: once for the create screen, once for the recipe selection screen
+    int popCount = 0;
+    Navigator.popUntil(context, (route){
+        popCount++;
+        // Pop until we are back at the main bookmark screen or the root
+        // Adjust '/bookmark' if your main bookmark screen route name is different
+        return route.isFirst || route.settings.name == '/bookmark' || popCount >= 2;
+    });
   }
 
-  Future<void> _pickImage() async{
+
+  Future<void> _pickImage(ImageSource source) async{
     try{
       final XFile? pickedFile = await _picker.pickImage(
-        source: ImageSource.gallery,
+        source: source,
         maxWidth: 1000,
         maxHeight: 1000,
         imageQuality: 85,
       );
-      
+
       if(pickedFile != null){
         setState((){
           _selectedImage = File(pickedFile.path);
-          _isSelectingCover = false;
+          _isSelectingCover = false; // Go back to main create screen after picking
+          _isSelectingRecipes = false; // Ensure we are not in recipe selection
         });
       }
     }
     catch(e){
       print('Error picking image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error picking image: $e')),
+      );
     }
   }
+
 
   void _showImageSourceOptions() async{
     showModalBottomSheet(
@@ -128,32 +137,15 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                 title: Text('Gallery', style: GoogleFonts.dmSans()),
                 onTap: (){
                   Navigator.of(context).pop();
-                  _pickImage();
+                  _pickImage(ImageSource.gallery);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
                 title: Text('Camera', style: GoogleFonts.dmSans()),
-                onTap: () async{
+                onTap: (){
                   Navigator.of(context).pop();
-                  try{
-                    final XFile? photo = await _picker.pickImage(
-                      source: ImageSource.camera,
-                      maxWidth: 1000,
-                      maxHeight: 1000,
-                      imageQuality: 85,
-                    );
-                    
-                    if(photo != null){
-                      setState((){
-                        _selectedImage = File(photo.path);
-                        _isSelectingCover = false;
-                      });
-                    }
-                  }
-                  catch(e){
-                    print('Error taking photo: $e');
-                  }
+                  _pickImage(ImageSource.camera);
                 },
               ),
               ListTile(
@@ -163,6 +155,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                   Navigator.of(context).pop();
                   setState((){
                     _isSelectingCover = true;
+                    _isSelectingRecipes = false; // Ensure we are not in recipe selection
                   });
                 },
               ),
@@ -172,11 +165,13 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
       },
     );
   }
-  
+
   void _toggleRecipeSelection(RecipeItem recipe){
     setState((){
+      // Check if the recipe is already selected using a unique identifier if available (like an ID)
+      // For now, using name as a proxy for uniqueness
       final isSelected = _selectedRecipes.any((item) => item.name == recipe.name);
-      
+
       if(isSelected){
         _selectedRecipes.removeWhere((item) => item.name == recipe.name);
       }
@@ -188,17 +183,18 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
 
   @override
   Widget build(BuildContext context){
-    if(_isSelectingCover){
-      return _buildCoverSelectionScreen();
-    }
-    else if(_isSelectingRecipes){
+    // Determine which screen to show based on state flags
+    if(_isSelectingRecipes){
       return _buildRecipeSelectionScreen();
+    }
+    else if(_isSelectingCover){
+      return _buildCoverSelectionScreen();
     }
     else {
       return _buildMainCreateScreen();
     }
   }
-  
+
   Widget _buildMainCreateScreen(){
     return Scaffold(
       backgroundColor: Colors.white,
@@ -216,7 +212,8 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          // Go back to recipe selection if coming from there
+          onPressed: (){ setState((){ _isSelectingRecipes = true; }); },
         ),
       ),
       body: SafeArea(
@@ -236,7 +233,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                   ),
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Image with border
                 GestureDetector(
                   onTap: _showImageSourceOptions,
@@ -245,26 +242,32 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                     width: 160,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.purple,
-                        width: 3,
+                        color: const Color(0xFF8E1616), // Changed border color
+                        width: 2, // Adjusted border width
                       ),
                       borderRadius: BorderRadius.circular(8),
+                      // Show selected image or placeholder
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: (_selectedImage != null
+                                ? FileImage(_selectedImage!)
+                                : const AssetImage('assets/images/cookbooks/placeholder_image.jpg'))
+                            as ImageProvider,
+                      ),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: _selectedImage != null
-                        ? Image.file(
-                            _selectedImage!,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            'assets/images/cookbooks/placeholder_image.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                    ),
+                    // Optional: Add an icon if no image is selected
+                    child: _selectedImage == null
+                        ? const Center(
+                            child: Icon(
+                            Icons.add_a_photo,
+                            color: Colors.grey,
+                            size: 40,
+                          ))
+                        : null,
                   ),
                 ),
-                
+
+
                 // Change cover text
                 GestureDetector(
                   onTap: _showImageSourceOptions,
@@ -280,34 +283,36 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                     ),
                   ),
                 ),
-                
+
                 // Title text field
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4), // Reduced vertical padding
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0E0E0),
+                    color: const Color(0xFFF0E0E0).withOpacity(0.5), // Lighter background
                     borderRadius: BorderRadius.circular(8),
+                     border: Border.all(color: Colors.grey.shade300), // Subtle border
                   ),
                   child: TextField(
                     controller: _titleController,
                     style: GoogleFonts.dmSans(
                       fontSize: 16,
+                      color: Colors.black87,
                     ),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Title',
                       hintStyle: GoogleFonts.dmSans(
                         fontSize: 16,
-                        color: Colors.grey,
+                        color: Colors.grey.shade500, // Lighter hint text
                       ),
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 40),
-                
+
                 // Create button
-                Container(
+                SizedBox( // Use SizedBox for consistent width
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
@@ -317,6 +322,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      elevation: 2, // Add subtle shadow
                     ),
                     child: Text(
                       'Create',
@@ -343,7 +349,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
       ),
     );
   }
-  
+
   Widget _buildCoverSelectionScreen(){
     return Scaffold(
       backgroundColor: Colors.white,
@@ -363,7 +369,8 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: (){
             setState((){
-              _isSelectingCover = false;
+              _isSelectingCover = false; // Go back to main create screen
+              _isSelectingRecipes = false;
             });
           },
         ),
@@ -387,7 +394,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                   ),
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Grid of cover options
                 GridView.builder(
                   shrinkWrap: true,
@@ -396,7 +403,7 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 0.7, // Adjust aspect ratio if needed
                   ),
                   itemCount: _coverOptions.length,
                   itemBuilder: (context, index){
@@ -404,8 +411,13 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                       onTap: (){
                         setState((){
                           _selectedImage = null; // Clear any camera/gallery selection
-                          // In a real app, you'd store the selected template
-                          _isSelectingCover = false;
+                          // Store the selected template path (or identifier)
+                          // For now, just using the placeholder path
+                          // In a real app, you might copy this asset or store its path
+                          // _selectedImage = File(_coverOptions[index]); // This won't work directly for assets
+                          print("Selected template: ${_coverOptions[index]}");
+                          _isSelectingCover = false; // Go back to main create screen
+                          _isSelectingRecipes = false;
                         });
                       },
                       child: ClipRRect(
@@ -433,8 +445,11 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
       ),
     );
   }
-  
+
   Widget _buildRecipeSelectionScreen(){
+    // Use widget.savedRecipes here
+    final List<RecipeItem> availableRecipes = widget.savedRecipes;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -451,9 +466,9 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(), // Exit the entire create flow
+          // Pop back to the main bookmark screen if back is pressed here
+          onPressed: (){ Navigator.of(context).pop(); },
         ),
-        // Then update the AppBar actions in _buildRecipeSelectionScreen
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 16.0),
@@ -464,8 +479,16 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
             child: IconButton(
               icon: const Icon(Icons.arrow_forward, color: Color(0xFF8E1616)),
               onPressed: (){
+                // Proceed only if at least one recipe is selected
+                if(_selectedRecipes.isEmpty){
+                   ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Pilih setidaknya satu resep.')),
+                  );
+                  return;
+                }
                 setState((){
-                  _isSelectingRecipes = false;
+                  _isSelectingRecipes = false; // Move to the main create screen
+                  _isSelectingCover = false;
                 });
               },
             ),
@@ -489,16 +512,19 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
                     ),
                   ),
                   if(_selectedRecipes.isNotEmpty)
-                    Text(
-                      '${_selectedRecipes.length} item selected',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        '${_selectedRecipes.length} item terpilih', // Bahasa Indonesia
+                        style: GoogleFonts.dmSans(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
                     ),
                   const SizedBox(height: 8),
                   Text(
-                    'Saved',
+                    'Saved', // Title indicating source
                     style: GoogleFonts.dmSans(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -508,46 +534,59 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
               ),
             ),
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.7,
-                ),
-                itemCount: _availableRecipes.length,
-                itemBuilder: (context, index){
-                  final recipe = _availableRecipes[index];
-                  final isSelected = _selectedRecipes.any((item) => item.name == recipe.name);
-                  
-                  return GestureDetector(
-                    onTap: () => _toggleRecipeSelection(recipe),
-                    child: Stack(
-                      children: [
-                        RecipeCard(recipe: recipe),
-                        if(isSelected)
-                          Positioned(
-                            top: 10,
-                            left: 10,
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                                size: 20,
+              // Use the passed-in list
+              child: availableRecipes.isEmpty
+                ? Center(
+                    child: Text(
+                      'Tidak ada resep tersimpan.',
+                      style: GoogleFonts.dmSans(fontSize: 16, color: Colors.grey),
+                    ),
+                  )
+                : GridView.builder(
+                  padding: const EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 0.7, // Adjust as needed
+                  ),
+                  itemCount: availableRecipes.length,
+                  itemBuilder: (context, index){
+                    final recipe = availableRecipes[index];
+                    // Check if the current recipe is selected
+                    final isSelected = _selectedRecipes.any((item) => item.name == recipe.name);
+
+                    return GestureDetector(
+                      onTap: (){ _toggleRecipeSelection(recipe); },
+                      child: Stack(
+                        children: [
+                          // Use the existing RecipeCard widget
+                          RecipeCard(recipe: recipe),
+                          // Overlay selection indicator
+                          if(isSelected)
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3), // Dark overlay
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
                             ),
-                          ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                          if(isSelected)
+                            const Positioned(
+                              top: 10,
+                              left: 10,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.white, // White checkmark
+                                size: 24,
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
             ),
           ],
         ),
@@ -564,6 +603,9 @@ class _BookmarkCreateScreenState extends State<BookmarkCreateScreen>{
   }
 }
 
+
+// Re-use RecipeCard from bookmark-detail.dart or bookmark.dart if identical
+// If slightly different, keep it here or move to a shared location.
 class RecipeCard extends StatelessWidget{
   final RecipeItem recipe;
 
@@ -579,10 +621,9 @@ class RecipeCard extends StatelessWidget{
       child: Stack(
         children: [
           // Recipe image
-          AspectRatio(
-            aspectRatio: 0.8,
+          Positioned.fill( // Use Positioned.fill for aspect ratio control
             child: Image.asset(
-              'assets/images/cookbooks/placeholder_image.jpg',
+              'assets/images/cookbooks/placeholder_image.jpg', // Use recipe.imageUrl
               fit: BoxFit.cover,
             ),
           ),
@@ -602,7 +643,7 @@ class RecipeCard extends StatelessWidget{
               ),
             ),
           ),
-          // Bookmark icon with blur background
+          // Bookmark icon (Optional: maybe show if it's bookmarked in general?)
           Positioned(
             top: 10,
             right: 10,
@@ -616,8 +657,9 @@ class RecipeCard extends StatelessWidget{
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
+                  // Use BookmarkSolid from iconoir if available and appropriate
                   child: const Icon(
-                    Icons.bookmark,
+                    Icons.bookmark, // Default icon
                     color: Colors.white,
                     size: 18,
                   ),
@@ -632,6 +674,7 @@ class RecipeCard extends StatelessWidget{
             right: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min, // Prevent column from taking full height
               children: [
                 // Rating
                 Row(
@@ -657,48 +700,46 @@ class RecipeCard extends StatelessWidget{
                     color: Colors.white,
                   ),
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 // Recipe info with dividers
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${recipe.calories} Cal',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                FittedBox( // Use FittedBox to prevent overflow if text is too long
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${recipe.calories} Cal',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11, // Adjusted font size
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      ' | ',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text('|', style: TextStyle(fontSize: 11, color: Colors.white)),
                       ),
-                    ),
-                    Text(
-                      '${recipe.prepTime} Porsi',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                      Text(
+                        '${recipe.prepTime} Porsi',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      ' | ',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text('|', style: TextStyle(fontSize: 11, color: Colors.white)),
                       ),
-                    ),
-                    Text(
-                      '${recipe.cookTime} min',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                      Text(
+                        '${recipe.cookTime} min',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

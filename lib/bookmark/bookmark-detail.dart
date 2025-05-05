@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
-import 'package:iconoir_flutter/iconoir_flutter.dart' hide Key, Text, Navigator;
+import 'package:iconoir_flutter/iconoir_flutter.dart' hide Key, Text, Navigator, List;
 import 'dart:ui';
 
 // Import bottom navigation bar
@@ -18,8 +18,56 @@ import 'bookmark-create.dart';
 
 class BookmarkDetailScreen extends StatelessWidget {
   final BookmarkCategory category;
+  final List<RecipeItem> allSavedRecipes = [
+    RecipeItem(
+      name: 'Roti Panggang Blueberry', // Was: Fruity blueberry toast
+      imageUrl: 'placeholder_image.jpg',
+      rating: 4.8,
+      reviewCount: 128,
+      calories: 23,
+      prepTime: 2, // Porsi
+      cookTime: 12, // Menit
+    ),
+    RecipeItem(
+      name: 'Roti Panggang Blackberry', // Was: Fruity blackberry toast
+      imageUrl: 'placeholder_image.jpg',
+      rating: 4.8,
+      reviewCount: 128,
+      calories: 24,
+      prepTime: 2, // Porsi
+      cookTime: 12, // Menit
+    ),
+    // New recipes for Dinner (now also in Saved)
+    RecipeItem(
+      name: 'Nasi Goreng Spesial',
+      imageUrl: 'placeholder_image.jpg',
+      rating: 4.5,
+      reviewCount: 210,
+      calories: 350,
+      prepTime: 2, // Porsi
+      cookTime: 20, // Menit
+    ),
+    RecipeItem(
+      name: 'Ayam Bakar Madu',
+      imageUrl: 'placeholder_image.jpg',
+      rating: 4.9,
+      reviewCount: 305,
+      calories: 420,
+      prepTime: 4, // Porsi
+      cookTime: 45, // Menit
+    ),
+    RecipeItem(
+      name: 'Sate Ayam Bumbu Kacang',
+      imageUrl: 'placeholder_image.jpg',
+      rating: 4.7,
+      reviewCount: 180,
+      calories: 380,
+      prepTime: 3, // Porsi
+      cookTime: 30, // Menit
+    ),
+  ];
 
-  const BookmarkDetailScreen({Key? key, required this.category})
+  BookmarkDetailScreen({Key? key, required this.category})
     : super(key: key);
 
   void handleBottomNavTap(int index) {
@@ -60,7 +108,7 @@ class BookmarkDetailScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const BookmarkCreateScreen(),
+                  builder: (context) => BookmarkCreateScreen(savedRecipes: allSavedRecipes,),
                 ),
               );
             },
