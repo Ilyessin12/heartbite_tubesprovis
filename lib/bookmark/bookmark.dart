@@ -283,30 +283,6 @@ class _BookmarkScreenState extends State<BookmarkScreen>{
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Delete button (only show when items are selected)
-          if(selectedCategories.isNotEmpty)
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: ElevatedButton(
-                onPressed: deleteSelectedCategories,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF8E1616),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  'Delete Bookmark',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
           // Navigation bar with integrated FAB
           BottomNavBar(
             currentIndex: 1, // 1 for bookmark screen
