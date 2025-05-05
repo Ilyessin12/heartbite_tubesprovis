@@ -18,13 +18,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
+          Positioned.fill(
             child: Image.asset(
               'assets/images/Ornament.png',
-              width: MediaQuery.of(context).size.width * 0.8, // lebih kecil
               fit: BoxFit.contain,
+              alignment: Alignment.topLeft,
             ),
           ),
           SafeArea(
@@ -33,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height -
+                    minHeight:
+                        MediaQuery.of(context).size.height -
                         MediaQuery.of(context).padding.top -
                         24,
                   ),
@@ -97,7 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
                         Expanded(
                           child: Center(
                             child: Column(
@@ -157,8 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            ForgotPassPage(),
+                                        builder: (context) => ForgotPassPage(),
                                       ),
                                     );
                                   },
@@ -191,17 +190,20 @@ class _LoginPageState extends State<LoginPage> {
                                     child: ElevatedButton(
                                       onPressed: () {},
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF8E1616)
-                                            .withOpacity(0.2),
+                                        backgroundColor: Color(
+                                          0xFF8E1616,
+                                        ).withOpacity(0.2),
                                         foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                       ),
                                       child: Ink.image(
                                         image: AssetImage(
-                                            'assets/images/login/google.png'),
+                                          'assets/images/login/google.png',
+                                        ),
                                         fit: BoxFit.cover,
                                         height: 25,
                                         width: 25,
@@ -217,12 +219,14 @@ class _LoginPageState extends State<LoginPage> {
                                     child: ElevatedButton(
                                       onPressed: () {},
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF8E1616)
-                                            .withOpacity(0.2),
+                                        backgroundColor: Color(
+                                          0xFF8E1616,
+                                        ).withOpacity(0.2),
                                         foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                       ),
                                       child: Row(
@@ -254,7 +258,10 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 child: Text(
                                   'Masuk',
-                                  style: GoogleFonts.dmSans(),
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),

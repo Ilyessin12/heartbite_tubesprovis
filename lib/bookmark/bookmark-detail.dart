@@ -11,7 +11,7 @@ import '../bottomnavbar/bottom-navbar.dart';
 import 'bookmark.dart' show BookmarkCategory, RecipeItem;
 
 // import from bookmark-edit.dart
-import 'bookmark-edit.dart' show BookmarkEditScreen;
+// import 'bookmark-edit.dart' show BookmarkEditScreen; // No longer needed here
 
 // import route for bookmark-create
 import 'bookmark-create.dart';
@@ -137,40 +137,7 @@ class BookmarkDetailScreen extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Edit button
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 8.0,
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => BookmarkEditScreen(category: category),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8E1616),
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                'Edit Bookmark',
-                style: GoogleFonts.dmSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
+          // REMOVED Edit button Container
           // Navigation bar with integrated FAB
           BottomNavBar(
             currentIndex: 1, // 1 for bookmark screen
@@ -186,6 +153,7 @@ class BookmarkDetailScreen extends StatelessWidget {
   }
 }
 
+// ... RecipeCard class remains the same ...
 class RecipeCard extends StatelessWidget {
   final RecipeItem recipe;
 
@@ -201,7 +169,7 @@ class RecipeCard extends StatelessWidget {
           AspectRatio(
             aspectRatio: 0.8,
             child: Image.asset(
-              'assets/images/cookbooks/placeholder_image.jpg',
+              'assets/images/cookbooks/placeholder_image.jpg', // Use recipe.imageUrl if available
               fit: BoxFit.cover,
             ),
           ),
@@ -232,7 +200,7 @@ class RecipeCard extends StatelessWidget {
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const BookmarkSolid(
+                  child: const BookmarkSolid( // Assuming this is always bookmarked in detail view
                     width: 18,
                     height: 18,
                     color: Colors.white,
@@ -273,39 +241,49 @@ class RecipeCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis, // Added overflow handling
                 ),
                 const SizedBox(height: 8),
                 // Recipe info with dividers
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      '${recipe.calories} Kalori',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                    Flexible( // Use Flexible to prevent overflow
+                      child: Text(
+                        '${recipe.calories} Kalori',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11, // Slightly smaller font
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const Text(
                       ' | ',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
+                      style: TextStyle(fontSize: 11, color: Colors.white),
                     ),
-                    Text(
-                      '${recipe.prepTime} Porsi',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                    Flexible(
+                      child: Text(
+                        '${recipe.prepTime} Porsi', // Assuming prepTime is Porsi
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const Text(
                       ' | ',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
+                      style: TextStyle(fontSize: 11, color: Colors.white),
                     ),
-                    Text(
-                      '${recipe.cookTime} Menit',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: Colors.white,
+                    Flexible(
+                      child: Text(
+                        '${recipe.cookTime} Menit',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
