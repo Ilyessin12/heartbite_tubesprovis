@@ -84,7 +84,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       ),
                     ),
                     Text(
-                      "Gallery",
+                      "Galeri",
                       style: AppTextStyles.heading.copyWith(color: Colors.white),
                     ),
                     const SizedBox(width: 40), // For balance

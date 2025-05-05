@@ -64,12 +64,12 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                   
                   // Ingredients section header
                   const Text(
-                    "Ingredients",
+                    "Bahan-bahan",
                     style: AppTextStyles.subheading,
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    "Please prepare the ingredients before start cooking",
+                    "Siapkan bahan-bahan sebelum mulai memasak",
                     style: AppTextStyles.caption,
                   ),
                 ],
@@ -121,7 +121,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Text(
-                        "Next",
+                        "Selanjutnya",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
