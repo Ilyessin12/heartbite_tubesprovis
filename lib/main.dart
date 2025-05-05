@@ -33,6 +33,16 @@ import 'bookmark/bookmark-edit.dart';
 import 'homepage/homepage.dart';
 import 'homepage/homepage-detail.dart';
 
+//===== import sidebar pages
+import 'sidebar/screens/about_screen.dart';
+import 'sidebar/screens/country_screen.dart';
+import 'sidebar/screens/edit_profile_screen.dart';
+import 'sidebar/screens/followers_screen.dart';
+import 'sidebar/screens/following_screen.dart';
+import 'sidebar/screens/notification_preferences_screen.dart';
+import 'sidebar/screens/profile_screen.dart';
+import 'sidebar/screens/settings_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -101,6 +111,16 @@ class NavigationPage extends StatelessWidget {
       PageItem('Home Page', const HomePage()),
       //TODO: Betulin homepage-detail Screen
       //PageItem('Home Page Detail', const HomePageDetailScreen()),
+
+      // sidebar pages
+      PageItem('About Page', const AboutScreen()),
+      PageItem('Country Page', const CountryScreen()),
+      PageItem('Edit Profile Page', const EditProfileScreen()),
+      PageItem('Followers Page', const FollowersScreen()),
+      PageItem('Following Page', const FollowingScreen()),
+      PageItem('Notification Preferences Page', const NotificationPreferencesScreen()),
+      PageItem('Profile Page', const ProfileScreen()),
+      PageItem('Setting Page', const SettingsScreen()),
 
 
       //++++++++++++++++++++ CONTOH PEMAKAIAN ++++++++++++++++++++++
