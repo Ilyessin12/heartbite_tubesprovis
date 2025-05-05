@@ -48,7 +48,7 @@ class ProfileStats extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
+          style: const TextStyle(fontSize: 12, color: Color.fromARGB(255, 42, 42, 42)),
         ),
       ],
     );

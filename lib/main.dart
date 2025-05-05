@@ -42,6 +42,7 @@ import 'sidebar/screens/following_screen.dart';
 import 'sidebar/screens/notification_preferences_screen.dart';
 import 'sidebar/screens/profile_screen.dart';
 import 'sidebar/screens/settings_screen.dart';
+import 'sidebar/screens/sidebar_screen.dart';
 
 //==== import detail resep pages
 import 'recipe_detail/recipe_detail.dart';
@@ -122,14 +123,16 @@ class NavigationPage extends StatelessWidget {
       //PageItem('Home Page Detail', const HomePageDetailScreen()),
 
       // sidebar pages
-      PageItem('About Page', const AboutScreen()),
-      PageItem('Country Page', const CountryScreen()),
+      PageItem('Profile Page', const ProfileScreen()),
       PageItem('Edit Profile Page', const EditProfileScreen()),
       PageItem('Followers Page', const FollowersScreen()),
       PageItem('Following Page', const FollowingScreen()),
-      PageItem('Notification Preferences Page', const NotificationPreferencesScreen()),
-      PageItem('Profile Page', const ProfileScreen()),
       PageItem('Setting Page', const SettingsScreen()),
+      PageItem('Country Page', const CountryScreen()),
+      PageItem('Notification Preferences Page', const NotificationPreferencesScreen()),
+      PageItem('About Page', const AboutScreen()),
+      PageItem('Sidebar Page', const SidebarScreen()),
+
 
       // detail resep pages
       PageItem('Recipe Detail', RecipeDetailScreen(

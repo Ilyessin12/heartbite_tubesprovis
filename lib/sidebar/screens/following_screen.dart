@@ -12,32 +12,32 @@ class FollowingScreen extends StatelessWidget {
       {
         'name': 'Sandy Chase',
         'username': '@sandychase',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar1.jpg',
       },
       {
         'name': 'Eleanor Langdon',
         'username': '@eleanorlan',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar2.jpg',
       },
       {
         'name': 'Salid Snake',
         'username': '@salidsnake',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar3.jpg',
       },
       {
         'name': 'Zidan Hadid',
         'username': '@zidanhadid',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar4.jpg',
       },
       {
         'name': 'Kevin Sanjaya',
         'username': '@kevinsanjaya',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar5.jpg',
       },
       {
         'name': 'I AM STEVE',
         'username': '@steve',
-        'avatarUrl': 'https://avatar.iran.liara.run/public',
+        'avatarUrl': 'assets/images/avatars/avatar2.jpg',
       },
     ];
 

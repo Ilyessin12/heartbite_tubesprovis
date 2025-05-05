@@ -65,7 +65,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween, // Membuat jarak antara teks dan ikon
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 16.0), // Geser teks ke kanan
+                        padding: const EdgeInsets.only(left: 160.0), // Geser teks ke kanan
                         child: const Text('Simpan'),
                       ),
                       const Icon(Icons.chevron_right, size: 20),
@@ -139,32 +139,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // }
 
 Widget _buildProfilePicture() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 16.0),
-    child: Center(
-      child: Stack(
+  return Column(
+    children: [
+      Stack(
+        clipBehavior: Clip.none,
         children: [
-          // Foto profil berbentuk kotak dengan radius
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12), // Radius sudut 12
-            child: Image.network(
-              'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=240&q=80',
-              width: 96,
-              height: 96,
-              fit: BoxFit.cover,
+          // Background Foto
+          Container(
+            height: 180,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: NetworkImage(
+                  'https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=800&q=80',
+                ),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(0),
             ),
           ),
-          // Tombol tambah di kanan bawah
+          // Tombol edit background
           Positioned(
-            bottom: 0,
-            right: 0,
+            top: 12,
+            right: 12,
             child: Container(
-              width: 32,
-              height: 32,
               decoration: const BoxDecoration(
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
+              padding: const EdgeInsets.all(8),
               child: const Icon(
                 Icons.edit,
                 color: Colors.white,
@@ -172,11 +175,55 @@ Widget _buildProfilePicture() {
               ),
             ),
           ),
+          // Foto Profil
+          Positioned(
+            bottom: -40,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 4),
+                    ),
+                    child: const CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(
+                        'assets/images/avatars/avatar3.jpg',
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
-    ),
+      const SizedBox(height: 48), // Ruang setelah foto profil
+    ],
   );
 }
+
+
 
 
 

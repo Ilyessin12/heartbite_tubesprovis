@@ -33,7 +33,7 @@ class UserListItem extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24,
-            backgroundImage: NetworkImage(avatarUrl),
+            backgroundImage: AssetImage(avatarUrl),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -60,20 +60,18 @@ class UserListItem extends StatelessWidget {
           GestureDetector(
             onTap: onFollowTap,
             child: Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: AppColors.primary),
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: const Center(
-                child: Text(
-                  'x',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+              child: const Text(
+                'Unfollow',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
                 ),
               ),
             ),

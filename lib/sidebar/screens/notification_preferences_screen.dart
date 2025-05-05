@@ -87,7 +87,7 @@ class _NotificationPreferencesScreenState extends State<NotificationPreferencesS
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                     Padding(
-                      padding: EdgeInsets.only(left: 12.0), // Geser teks ke kanan 8 pixel
+                      padding: EdgeInsets.only(left: 160.0), // Geser teks ke kanan 8 pixel
                       child: Text('Simpan'),
                     ),
                       Icon(Icons.chevron_right, size: 20),

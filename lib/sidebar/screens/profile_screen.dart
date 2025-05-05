@@ -83,10 +83,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-
-
-
-
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -126,56 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  // Widget _buildProfileInfo() {
-  //   return Column(
-  //     children: [
-  //       // Profile picture with white border
-  //       Container(
-  //         width: 120,
-  //         height: 120,
-  //         decoration: BoxDecoration(
-  //           shape: BoxShape.circle,
-  //           border: Border.all(color: Colors.white, width: 4),
-  //         ),
-  //         child: ClipRRect(
-  //           borderRadius: BorderRadius.circular(12),
-  //           child: Image.network(
-  //             'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=240&q=80',
-  //             fit: BoxFit.cover,
-  //             width: 80,
-  //             height: 80,
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(height: 16),
-  //       const Text(
-  //         'Ichsan Simialakama',
-  //         style: TextStyle(
-  //           fontWeight: FontWeight.bold,
-  //           fontSize: 20,
-  //           color: Colors.black,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 4),
-  //       const Text(
-  //         '@361329',
-  //         style: TextStyle(
-  //           fontSize: 14,
-  //           color: Colors.grey,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 16),
-  //       ProfileStats(
-  //         recipes: 24,
-  //         following: 432,
-  //         followers: 643,
-  //         onFollowingTap: () => Navigator.pushNamed(context, '/following'),
-  //         onFollowersTap: () => Navigator.pushNamed(context, '/followers'),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget _buildProfileInfo() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -198,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
-                'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=240&q=80',
+                'assets/images/avatars/avatar3.jpg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -241,7 +187,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-
   Widget _buildRecipeSection() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -274,40 +219,43 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   }
 
   Widget _buildTabBar() {
-    return Container(
-      margin: const EdgeInsets.only(top: 16),
-      padding: const EdgeInsets.only(left: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(_tabs.length, (index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                _selectedTabIndex = index;
-                _tabController.animateTo(index);
-              });
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: _selectedTabIndex == index ? Colors.white : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: _selectedTabIndex == index ? Colors.grey.shade300 : Colors.grey.shade400,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        margin: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.only(left: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(_tabs.length, (index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedTabIndex = index;
+                  _tabController.animateTo(index);
+                });
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: _selectedTabIndex == index ? Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: _selectedTabIndex == index ? Colors.grey.shade300 : Colors.grey.shade400,
+                  ),
+                ),
+                child: Text(
+                  _tabs[index],
+                  style: TextStyle(
+                    color: _selectedTabIndex == index ? Colors.black : AppColors.tabInactive,
+                    fontWeight: _selectedTabIndex == index ? FontWeight.w500 : FontWeight.normal,
+                    fontSize: 14,
+                  ),
                 ),
               ),
-              child: Text(
-                _tabs[index],
-                style: TextStyle(
-                  color: _selectedTabIndex == index ? Colors.black : AppColors.tabInactive,
-                  fontWeight: _selectedTabIndex == index ? FontWeight.w500 : FontWeight.normal,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -326,6 +274,18 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         'isSaved': false,
         'time': '8 min',
       },
+      {
+        'title': 'Avocado Toast',
+        'imageUrl': 'https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
+        'isSaved': true,
+        'time': '15 min',
+      },
+      {
+        'title': 'Pancakes with Berries',
+        'imageUrl': 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
+        'isSaved': false,
+        'time': '20 min',
+      },
     ];
 
     return Column(
@@ -339,6 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: GridView.builder(
+                  scrollDirection: Axis.vertical,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.7,
@@ -365,16 +326,4 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       ],
     );
   }
-
-
-
-
-
-
-
-
-
-
-
 }
-
